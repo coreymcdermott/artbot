@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artbot</title>
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/artbot.css' %}">
+</head>
+
+<body>
+  <div class="container">
+    <div class = "header">
+      <h1>Artbot</h1>
+      <h4>Exhibitions open this weekend</h4>
+    </div>
+    <div>
+      {% if events %}
+      <ul>
+        {% for event in events %}
+        <li>
+          <img src="{{ event.image }}"></img>
+          <h3>{{ event.title }}</h3>
+          <h4>{{ event.venue }} - {{ event.start | date:"j M" }} to {{ event.end | date:"j M"  }}</h4>
+          <p>{{ event.description }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</body>

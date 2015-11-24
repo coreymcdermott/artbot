@@ -18,7 +18,7 @@ class UTSSpider(Spider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = "UTS"
+        item['venue']       = "UTS ART"
         item['title']       = response.xpath('//h1[contains(@class, "entry-title")]/text()').extract_first().strip() \
                             + " - " \
                             + response.xpath('//h2[contains(@class, "entry-subtitle")]/text()').extract_first().strip()

@@ -6,7 +6,7 @@ Artbot is written in Python and built on [Django](http://scrapy.org) and [Scrapy
 
 ## Supported Galleries
 
-Artbot is currently focused on Galleries in Sydney, Australia.
+Artbot is currently focused on galleries in Sydney, Australia.
 
 * [Arthouse Gallery](http://www.arthousegallery.com.au)
 * [Art Gallery of NSW](http://www.artgallery.nsw.gov.au)

@@ -8,10 +8,10 @@ Artbot is written in Python and built on [Django](http://scrapy.org) and [Scrapy
 
 Artbot is currently focused on galleries in Sydney, Australia.
 
-* [Arthouse Gallery](http://www.arthousegallery.com.au)
-* [Art Gallery of NSW](http://www.artgallery.nsw.gov.au)
-* [Galerie pompom](http://www.galeriepompom.com/)
 * [aMBUSH Gallery](http://ambushgallery.com/)
+* [Art Gallery of NSW](http://www.artgallery.nsw.gov.au)
+* [Arthouse Gallery](http://www.arthousegallery.com.au)
+* [Galerie pompom](http://www.galeriepompom.com/)
 * [Museum of Contemporary Art Australia](http://www.mca.com.au)
 * [UTS ART](http://art.uts.edu.au/)
 

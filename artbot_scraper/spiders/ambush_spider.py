@@ -5,7 +5,7 @@ from dateutil             import parser, relativedelta
 from artbot_scraper.items import EventItem
 
 class AmbushSpider(Spider):
-    name            = "Ambush"
+    name            = "aMBUSH"
     allowed_domains = ["ambushgallery.com"]
     start_urls      = ["http://ambushgallery.com/events/"]
 
@@ -18,7 +18,7 @@ class AmbushSpider(Spider):
     def parse_event(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = "Ambush"
+        item['venue']       = "aMBUSH"
         item['title']       = response.xpath('//h1/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(@class, "event_details")]//text()').extract())
         item['image']       = response.xpath('//figure[contains(@class, "amb_gal_img")]//img/@src').extract_first()

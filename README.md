@@ -11,6 +11,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
 * [aMBUSH Gallery](http://ambushgallery.com/)
 * [Art Gallery of NSW](http://www.artgallery.nsw.gov.au)
 * [Arthouse Gallery](http://www.arthousegallery.com.au)
+* [Firstdraft](http://firstdraft.org.au)
 * [Galerie pompom](http://www.galeriepompom.com/)
 * [Museum of Contemporary Art Australia](http://www.mca.com.au)
 * [UTS ART](http://art.uts.edu.au/)

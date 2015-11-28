@@ -5,9 +5,9 @@ from dateutil             import parser, relativedelta
 from artbot_scraper.items import EventItem
 
 class AGNSpider(Spider):
-    name            = "AGN"
-    allowed_domains = ["artgallery.nsw.gov.au"]
-    start_urls      = ["http://www.artgallery.nsw.gov.au/exhibitions/current/"]
+    name            = 'AGN'
+    allowed_domains = ['artgallery.nsw.gov.au']
+    start_urls      = ['http://www.artgallery.nsw.gov.au/exhibitions/current/']
 
     def parse(self, response):
         for href in response.xpath('//div[contains(@class, "currentExhibition")]//a[1]/@href'):
@@ -18,10 +18,10 @@ class AGNSpider(Spider):
     def parse_current_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = "AGN"
+        item['venue']       = 'AGN'
         item['title']       = response.xpath('.//h2//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "lumpy-main")]//text()').extract()).strip()
-        item['image']       = "http://www.artgallery.nsw.gov.au" + response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first()
+        item['image']       = 'http://www.artgallery.nsw.gov.au' + response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first()
 
         season  = response.xpath('.//div[contains(@class, "exhib-details")]//h3/text()').extract_first().strip()
         match   = re.match(u'(?P<start>\d+\s+\w+)[\s\-\–]*(?P<end>\d+\s+\w+)', season, re.UNICODE)

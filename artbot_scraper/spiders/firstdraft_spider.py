@@ -5,9 +5,9 @@ from dateutil             import parser, relativedelta
 from artbot_scraper.items import EventItem
 
 class FirstdraftSpider(Spider):
-    name            = "Firstdraft"
-    allowed_domains = ["firstdraft.org.au"]
-    start_urls      = ["http://firstdraft.org.au/exhibitions/"]
+    name            = 'Firstdraft'
+    allowed_domains = ['firstdraft.org.au']
+    start_urls      = ['http://firstdraft.org.au/exhibitions/']
 
     def parse(self, response):
         for href in response.xpath('//article//a/@href'):
@@ -18,7 +18,7 @@ class FirstdraftSpider(Spider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = "Firstdraft"
+        item['venue']       = 'Firstdraft'
         item['title']       = response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]/h1/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]//h3//text()').extract()).strip()
         item['image']       = response.xpath('//section[contains(concat(" ", @class, " "), " images_container ")]//img/@src').extract_first()

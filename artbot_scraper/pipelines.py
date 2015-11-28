@@ -7,5 +7,5 @@ class EventPipeline(object):
         try:
             item.save()
         except IntegrityError:
-            raise DropItem("Duplicate: %s" % item)
+            raise DropItem('Duplicate: %s' % item)
         return item

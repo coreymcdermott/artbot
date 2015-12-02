@@ -81,7 +81,7 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default='sqlite:///{}'.format(DATABASES['default']['NAME']))
 DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Internationalization

@@ -15,5 +15,5 @@ class Event(models.Model):
     class Meta:
         unique_together = ('venue', 'title')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title

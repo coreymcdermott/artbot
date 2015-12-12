@@ -25,6 +25,11 @@ li p {
   clear: none;
 }
 
+li a, a:link, a:visited, a:active, a:hover {
+  color: #333333;
+  text-decoration: none !important;
+}
+
 li {
   overflow: auto;
   margin-bottom: 30px;

@@ -23,9 +23,18 @@ class EventWeekendFilter(SimpleListFilter):
         elif self.value() == 'NEXT_WEEKEND':
             return queryset.filter(start__lte = next_weekend, end__gte = next_weekend)
 
+def publish(modeladmin, request, queryset):
+    queryset.update(published = True)
+publish.short_description = "Publish selected events"
+
+def withdraw(modeladmin, request, queryset):
+    queryset.update(published = False)
+withdraw.short_description = "Withdraw selected events"
+
 class EventAdmin(admin.ModelAdmin):
-    list_filter   = ('published', EventWeekendFilter, )
+    list_filter   = ('published', EventWeekendFilter,)
     list_display  = ('title', 'venue', 'start', 'end', 'created', 'published')
     search_fields = ('title', 'venue')
+    actions       = [publish, withdraw,]
 
 admin.site.register(Event, EventAdmin)

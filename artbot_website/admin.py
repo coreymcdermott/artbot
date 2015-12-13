@@ -15,13 +15,20 @@ class EventWeekendFilter(SimpleListFilter):
 
     def queryset(self, request, queryset):
 
-        this_weekend = date.today() + timedelta((6 - date.today().isoweekday()) % 7 )
-        next_weekend = this_weekend + timedelta(days = 7)
+        if date.today().isoweekday() in [5,6,7]:
+            this_weekend_start = date.today()
+        else:
+            this_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7 )
+
+        if date.today().isoweekday() == 5:
+            next_weekend_start = date.today() + timedelta(days = 7)
+        else:
+            next_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7 ) + timedelta(days = 7)
 
         if self.value() == 'THIS_WEEKEND':
-            return queryset.filter(start__lte = this_weekend, end__gte = this_weekend)
+            return queryset.filter(start__lte = this_weekend_start, end__gte = this_weekend_start)
         elif self.value() == 'NEXT_WEEKEND':
-            return queryset.filter(start__lte = next_weekend, end__gte = next_weekend)
+            return queryset.filter(start__lte = next_weekend_start, end__gte = next_weekend_start)
 
 def publish(modeladmin, request, queryset):
     queryset.update(published = True)

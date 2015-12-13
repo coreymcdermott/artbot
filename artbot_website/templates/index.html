@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load artbot_website_templatetags %}
 <!doctype html>
 
 <head>
@@ -16,7 +17,7 @@
   <div class="container">
     <div class = "header">
       <h1>Artbot</h1>
-      <h4>Exhibitions open this weekend</h4>
+      <h4>Exhibitions open in Sydney this weekend</h4>
     </div>
     <div>
       {% if events %}
@@ -26,7 +27,7 @@
           <a href="{{ event.url }}">
             <img src="{{ event.image }}"></img>
             <h3>{{ event.title }}</h3>
-            <h4>{{ event.venue }} - {{ event.start | date:"j M" }} to {{ event.end | date:"j M"  }}</h4>
+            <h4>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}</h4>
             <p>{{ event.description }}</p>
           </a>
         </li>

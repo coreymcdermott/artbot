@@ -8,5 +8,5 @@ def index(request):
     else:
         weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7 )
 
-    events = Event.objects.filter(start__lte = weekend_start, end__gte = weekend_start).order_by('-start')
+    events = Event.objects.filter(start__lte = weekend_start, end__gte = weekend_start, published = True).order_by('-start')
     return render(request, 'index.html', {'events': events})

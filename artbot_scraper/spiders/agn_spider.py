@@ -23,8 +23,8 @@ class AGNSpider(Spider):
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "lumpy-main")]//text()').extract()).strip()
         item['image']       = 'http://www.artgallery.nsw.gov.au' + response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first()
 
-        season  = response.xpath('.//div[contains(@class, "exhib-details")]//h3/text()').extract_first().strip()
-        match   = re.match(u'(?P<start>\d+\s+\w+)[\s\-\–]*(?P<end>\d+\s+\w+)', season, re.UNICODE)
+        season  = ' '.join(response.xpath('.//div[contains(@class, "exhib-details")]//h3/text()').extract()).strip()
+        match   = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season, re.UNICODE)
 
         if (match):
             start = parser.parse(match.group('start'))

@@ -7,7 +7,7 @@ from PIL          import Image, ImageChops
 from StringIO     import StringIO
 
 class Event(models.Model):
-    url         = models.TextField()
+    url         = models.TextField(unique = True)
     venue       = models.TextField()
     title       = models.TextField()
     description = models.TextField()

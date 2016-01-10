@@ -27,7 +27,7 @@ class FirstdraftSpider(Spider):
         match   = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season, re.UNICODE)
 
         if (match):
-            item['start'] = parser.parse(match.group('start'))
-            item['end']   = parser.parse(match.group('end'))
+            item['start'] = parser.parse(match.group('start'), dayfirst = True)
+            item['end']   = parser.parse(match.group('end'),   dayfirst = True)
 
         yield item

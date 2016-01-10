@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import re
 from scrapy               import Spider, Request
-from dateutil             import parser, relativedelta
+from dateutil             import parser
 from artbot_scraper.items import EventItem
 
 class AGNSpider(Spider):
@@ -29,9 +29,6 @@ class AGNSpider(Spider):
         if (match):
             start = parser.parse(match.group('start'))
             end   = parser.parse(match.group('end'))
-
-            if (end < start):
-                end = end + relativedelta.relativedelta(years=+1)
 
             item['start']  = start
             item['end']    = end

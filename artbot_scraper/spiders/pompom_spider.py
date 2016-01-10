@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 import re
-from dateutil              import parser, relativedelta
+from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
@@ -25,9 +25,6 @@ class PompomSpider(CrawlSpider):
         if (match):
             start = parser.parse(match.group('start'))
             end   = parser.parse(match.group('end'))
-
-            if (end < start):
-                end = end + relativedelta.relativedelta(years=+1)
 
             item['start']  = start
             item['end']    = end

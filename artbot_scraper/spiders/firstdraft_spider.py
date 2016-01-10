@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import re
 from scrapy               import Spider, Request
-from dateutil             import parser, relativedelta
+from dateutil             import parser
 from artbot_scraper.items import EventItem
 
 class FirstdraftSpider(Spider):

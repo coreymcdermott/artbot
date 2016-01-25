@@ -2,6 +2,7 @@
 from __future__                  import absolute_import
 from django.core.management.base import BaseCommand
 
+
 class Command(BaseCommand):
 
     def run_from_argv(self, argv):

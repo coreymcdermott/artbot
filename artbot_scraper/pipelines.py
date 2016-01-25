@@ -4,9 +4,10 @@ from scrapy.exceptions import DropItem
 from titlecase         import titlecase
 from dateutil          import parser, relativedelta
 
+
 class EventPipeline(object):
     def process_item(self, item, spider):
-        
+
         item['title'] = titlecase(item['title'])
 
         if (item['end'] < item['start']):

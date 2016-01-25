@@ -1,9 +1,10 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import re
 from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
+
 
 class PompomSpider(CrawlSpider):
     name            = 'Pompom'

@@ -3,6 +3,7 @@ from scrapy.commands      import ScrapyCommand
 from scrapy.utils.project import get_project_settings
 from scrapy.crawler       import CrawlerProcess
 
+
 class Command(ScrapyCommand):
     requires_project = True
 

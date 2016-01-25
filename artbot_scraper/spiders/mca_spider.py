@@ -1,8 +1,9 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import re
 from scrapy               import Spider
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+
 
 class MCASpider(Spider):
     name            = 'MCA'

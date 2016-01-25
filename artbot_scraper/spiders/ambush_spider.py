@@ -1,8 +1,9 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+
 
 class AmbushSpider(Spider):
     name            = 'aMBUSH'
@@ -30,7 +31,7 @@ class AmbushSpider(Spider):
             start = parser.parse(match.group('start'))
             end   = parser.parse(match.group('end'))
 
-            item['start']  = start
-            item['end']    = end
+            item['start'] = start
+            item['end']   = end
 
         yield item

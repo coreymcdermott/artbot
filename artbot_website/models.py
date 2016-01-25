@@ -6,6 +6,7 @@ from django.utils import timezone
 from PIL          import Image, ImageChops
 from StringIO     import StringIO
 
+
 class Event(models.Model):
     url         = models.TextField(unique = True)
     venue       = models.TextField()
@@ -32,7 +33,7 @@ class Event(models.Model):
         else:
             image_out = StringIO()
 
-            border = Image.new(image.mode, image.size, image.getpixel((0,0)))
+            border = Image.new(image.mode, image.size, image.getpixel((0, 0)))
             diff   = ImageChops.difference(image, border)
             diff   = ImageChops.add(diff, diff, 2.0, -100)
             bbox   = diff.getbbox()

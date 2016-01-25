@@ -16,28 +16,31 @@ class EventWeekendFilter(SimpleListFilter):
 
     def queryset(self, request, queryset):
 
-        if date.today().isoweekday() in [5,6,7]:
+        if date.today().isoweekday() in [5, 6, 7]:
             this_weekend_start = date.today()
         else:
-            this_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7 )
+            this_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7)
 
         if date.today().isoweekday() == 5:
             next_weekend_start = date.today() + timedelta(days = 7)
         else:
-            next_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7 ) + timedelta(days = 7)
+            next_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7) + timedelta(days = 7)
 
         if self.value() == 'THIS_WEEKEND':
             return queryset.filter(start__lte = this_weekend_start, end__gte = this_weekend_start)
         elif self.value() == 'NEXT_WEEKEND':
             return queryset.filter(start__lte = next_weekend_start, end__gte = next_weekend_start)
 
+
 def publish(modeladmin, request, queryset):
     queryset.update(published = True)
 publish.short_description = "Publish"
 
+
 def withdraw(modeladmin, request, queryset):
     queryset.update(published = False)
 withdraw.short_description = "Withdraw"
+
 
 def crop_image(modeladmin, request, queryset):
     for event in queryset:
@@ -47,6 +50,7 @@ def crop_image(modeladmin, request, queryset):
         except Exception as e:
             messages.error(request, str(e))
 crop_image.short_description = "Crop and transload images"
+
 
 class EventAdmin(admin.ModelAdmin):
     list_filter   = ('published', EventWeekendFilter,)

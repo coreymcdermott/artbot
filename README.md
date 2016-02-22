@@ -16,6 +16,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
 * [m2 Gallery](http://m2gallery.com.au)
 * [Mild Manners](http://mild-manners.com/JEDDA-DAISY-CULLEY-UNIVERSAL-LOVE)
 * [Museum of Contemporary Art Australia](http://www.mca.com.au)
+* [National Art School](http://www.nas.edu.au/NASGallery/Current-Exhibition-and-Events)
 * [UNSW Galleries](https://www.artdesign.unsw.edu.au/unsw-galleries)
 * [UTS ART](http://art.uts.edu.au/)
 

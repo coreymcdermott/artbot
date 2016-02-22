@@ -8,9 +8,10 @@ from StringIO     import StringIO
 
 
 class Event(models.Model):
-    url         = models.TextField(unique = True)
+    url         = models.TextField()
     venue       = models.TextField()
     title       = models.TextField()
+    titleRaw    = models.TextField(blank = True, null = True)
     description = models.TextField()
     image       = models.TextField()
     start       = models.DateTimeField(blank = True, null = True)
@@ -19,7 +20,7 @@ class Event(models.Model):
     published   = models.BooleanField(default = False)
 
     class Meta:
-        unique_together = ('venue', 'title')
+        unique_together = ('venue', 'titleRaw')
 
     def __unicode__(self):
         return self.title

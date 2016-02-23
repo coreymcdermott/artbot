@@ -14,7 +14,7 @@ class MCASpider(Spider):
         for event in response.xpath('//div[contains(@class, "featured_item")]'):
             item = EventItem()
             item['url']         = 'http://www.mca.com.au' + event.xpath('.//a/@href').extract_first()
-            item['venue']       = 'MCA'
+            item['venue']       = self.name
             item['title']       = event.xpath('.//h2/text()').extract_first().strip()
             item['description'] = ''.join(event.xpath('.//div[@class="col-md-4"]/p[3]//text()').extract())
             item['image']       = 'http://www.mca.com.au' + event.xpath('.//div[contains(@class, "featured-image")]/@style').re_first('(?<=\().*(?=\))')

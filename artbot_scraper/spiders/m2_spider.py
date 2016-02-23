@@ -19,7 +19,7 @@ class M2Spider(Spider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'm2 Gallery'
+        item['venue']       = self.name
         item['title']       = response.xpath('.//div[contains(@class, "m2title")]//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "detailscontent")]//text()').extract()).strip()
         item['image']       = 'http://m2gallery.com.au' + response.xpath('.//div[contains(@class, "m2rightcolumn")]//img[1]/@src').extract_first()

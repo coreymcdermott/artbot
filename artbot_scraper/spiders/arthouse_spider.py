@@ -19,7 +19,7 @@ class ArthouseSpider(Spider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'Arthouse Gallery'
+        item['venue']       = self.name
         item['title']       = response.xpath('//div[contains(@id, "headerTitle")]//text()').extract_first().strip() \
                             + ' - ' \
                             + response.xpath('//div[contains(@id, "headerSubTitle")]//em/text()').extract_first().strip()

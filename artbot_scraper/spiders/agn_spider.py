@@ -19,7 +19,7 @@ class AGNSpider(Spider):
     def parse_current_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'AGN'
+        item['venue']       = self.name
         item['title']       = response.xpath('.//h2//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "lumpy-main")]//text()').extract()).strip()
         item['image']       = 'http://www.artgallery.nsw.gov.au' + response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first()

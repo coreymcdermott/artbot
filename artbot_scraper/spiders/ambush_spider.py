@@ -19,7 +19,7 @@ class AmbushSpider(Spider):
     def parse_event(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'aMBUSH'
+        item['venue']       = self.name
         item['title']       = response.xpath('//h1/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(@class, "event_details")]//text()').extract())
         item['image']       = response.xpath('//figure[contains(@class, "amb_gal_img")]//img/@src').extract_first()

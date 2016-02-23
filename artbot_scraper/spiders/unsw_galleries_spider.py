@@ -14,7 +14,7 @@ class UNSWGalleriesSpider(CrawlSpider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'UNSW Galleries'
+        item['venue']       = self.name
         item['title']       = response.xpath('.//h2[contains(@class, "title")]//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "field-type-text-with-summary")]//text()').extract()).strip()
         item['image']       = response.xpath('.//img[contains(@typeof, "foaf:Image")]/@src').extract_first()

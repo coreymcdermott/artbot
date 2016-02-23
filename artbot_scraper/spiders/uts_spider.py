@@ -6,7 +6,7 @@ from artbot_scraper.items import EventItem
 
 
 class UTSSpider(Spider):
-    name            = 'UTS'
+    name            = 'UTS ART'
     allowed_domains = ['art.uts.edu.au']
     start_urls      = ['http://art.uts.edu.au/index.php/exhibitions/']
 
@@ -19,7 +19,7 @@ class UTSSpider(Spider):
     def parse_exhibition(self, response):
         item = EventItem()
         item['url']         = response.url
-        item['venue']       = 'UTS ART'
+        item['venue']       = self.name
         item['title']       = response.xpath('//h1[contains(@class, "entry-title")]/text()').extract_first().strip() \
                             + ' - ' \
                             + response.xpath('//h2[contains(@class, "entry-subtitle")]/text()').extract_first().strip()

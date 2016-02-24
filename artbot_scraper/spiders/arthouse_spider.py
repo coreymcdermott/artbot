@@ -6,7 +6,7 @@ from artbot_scraper.items import EventItem
 
 
 class ArthouseSpider(Spider):
-    name            = 'Arthouse'
+    name            = 'Arthouse Gallery'
     allowed_domains = ['www.arthousegallery.com.au']
     start_urls      = ['http://www.arthousegallery.com.au/exhibitions/']
 

@@ -22,7 +22,7 @@ class PompomSpider(CrawlSpider):
         item['image'] = response.urljoin(response.xpath('//div[contains(@class, "SSSlide")]//img/@data-src').extract_first())
 
         season = response.xpath('//div[@class = "position_content"]/div[3]/p[4]/text()').extract_first().strip()
-        match  = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)
+        match  = re.match('(?P<start>\d+[\s+\w+]*)[\s\-]*(?P<end>\d+\s+\w+\s+\d+)', season)
 
         if (match):
             tz            = timezone('Australia/Sydney')

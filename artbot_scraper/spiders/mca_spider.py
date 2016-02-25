@@ -18,7 +18,7 @@ class MCASpider(Spider):
             item['venue']       = self.name
             item['title']       = event.xpath('.//h2/text()').extract_first().strip()
             item['description'] = ''.join(event.xpath('.//div[@class="col-md-4"]/p[3]//text()').extract())
-            item['image']       = 'http://www.mca.com.au' + event.xpath('.//div[contains(@class, "featured-image")]/@style').re_first('(?<=\().*(?=\))')
+            item['image']       = response.urljoin(event.xpath('.//div[contains(@class, "featured-image")]/@style').re_first('(?<=\().*(?=\))'))
 
             season = event.xpath('.//b[contains(@class, "occurrence_date")]/text()').extract_first().strip().replace(u'\u2013\xa0', u'')
             match  = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)

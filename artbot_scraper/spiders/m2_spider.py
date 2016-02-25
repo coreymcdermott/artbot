@@ -23,7 +23,7 @@ class M2Spider(Spider):
         item['venue']       = self.name
         item['title']       = response.xpath('.//div[contains(@class, "m2title")]//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "detailscontent")]//text()').extract()).strip()
-        item['image']       = 'http://m2gallery.com.au' + response.xpath('.//div[contains(@class, "m2rightcolumn")]//img[1]/@src').extract_first()
+        item['image']       = response.urljoin(response.xpath('.//div[contains(@class, "m2rightcolumn")]//img[1]/@src').extract_first())
 
         season = ''.join(response.xpath('.//div[contains(@class, "showdate")]//text()').extract()).strip()
         match  = re.search(u'(?P<start>\d+\s+\w+\s+\d+).*\s+(?P<end>\d+\s+\w+\s+\d+)', season, re.UNICODE)

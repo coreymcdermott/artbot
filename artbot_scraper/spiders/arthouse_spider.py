@@ -25,7 +25,7 @@ class ArthouseSpider(Spider):
                             + ' - ' \
                             + response.xpath('//div[contains(@id, "headerSubTitle")]//em/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(@id, "exhibition")]//hr/following-sibling::p//text()').extract()).strip()
-        item['image']       = 'http://www.arthousegallery.com.au/' + response.xpath('//img//@src').extract_first()
+        item['image']       = response.urljoin(response.xpath('//img//@src').extract_first())
 
         season = ''.join(map(unicode, response.xpath('//div[contains(@id, "headerSubTitle")]//text()[not(ancestor::em)]').extract())).strip()
         match  = re.match(u'(?P<start>^[\d\w\s]+)[\s\-\–]*(?P<end>[\d\w\s]+$)', season, re.UNICODE)

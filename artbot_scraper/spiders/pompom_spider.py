@@ -19,7 +19,7 @@ class PompomSpider(CrawlSpider):
         item['venue'] = self.name
         item['title'] = response.xpath('//div[@class = "position_content"]/div[3]/p[1]/text()').extract_first().strip() + ' - ' +\
                         response.xpath('//div[@class = "position_content"]/div[3]/p[2]/text()').extract_first().strip()
-        item['image'] = 'http://galeriepompom.com/' + response.xpath('//div[contains(@class, "SSSlide")]//img/@data-src').extract_first()
+        item['image'] = response.urljoin(response.xpath('//div[contains(@class, "SSSlide")]//img/@data-src').extract_first())
 
         season = response.xpath('//div[@class = "position_content"]/div[3]/p[4]/text()').extract_first().strip()
         match  = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)

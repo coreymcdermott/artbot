@@ -18,7 +18,7 @@ class NationalArtSchoolSpider(Spider):
             item['venue']       = self.name
             item['title']       = detail.xpath('.//h2/text()').extract_first().strip()
             item['description'] = ''.join(detail.xpath('.//p[img]//following-sibling::*//text()').extract()).strip()
-            item['image']       = 'http://www.nas.edu.au/' + detail.xpath('.//img/@src').extract_first()
+            item['image']       = response.urljoin(detail.xpath('.//img/@src').extract_first())
 
             season = detail.xpath('.//span//text()').extract_first()
             match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)', unicode(season), re.UNICODE)

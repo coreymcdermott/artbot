@@ -23,7 +23,7 @@ class AGNSpider(Spider):
         item['venue']       = self.name
         item['title']       = response.xpath('.//h2//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "lumpy-main")]//text()').extract()).strip()
-        item['image']       = 'http://www.artgallery.nsw.gov.au' + response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first()
+        item['image']       = response.urljoin(response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first())
 
         season = ' '.join(response.xpath('.//div[contains(@class, "exhib-details")]//h3/text()').extract()).strip()
         match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season, re.UNICODE)

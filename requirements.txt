@@ -20,6 +20,7 @@ pyasn1-modules==0.0.8
 pycparser==2.14
 pyOpenSSL==0.15.1
 python-dateutil==2.4.2
+pytz==2015.7
 queuelib==1.4.2
 Scrapy==1.0.3
 scrapy-djangoitem==1.0.0

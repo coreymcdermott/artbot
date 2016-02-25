@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class UTSSpider(Spider):
@@ -17,7 +18,7 @@ class UTSSpider(Spider):
             yield Request(url, callback=self.parse_exhibition)
 
     def parse_exhibition(self, response):
-        item = EventItem()
+        item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
         item['title']       = response.xpath('//h1[contains(@class, "entry-title")]/text()').extract_first().strip() \
@@ -25,7 +26,8 @@ class UTSSpider(Spider):
                             + response.xpath('//h2[contains(@class, "entry-subtitle")]/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(@class, "entry-content")]//text()').extract()).strip()
         item['image']       = response.xpath('//img[contains(@class, "large-crop")]/@src').extract_first()
-        item['start']       = parser.parse(response.xpath('//span[contains(@class, "start-date")]/text()').extract_first().strip(), fuzzy = True)
-        item['end']         = parser.parse(response.xpath('//span[contains(@class, "end-date")]/text()').extract_first().strip(), fuzzy = True)
+        tz                  = timezone('Australia/Sydney')
+        item['start']       = tz.localize(parser.parse(response.xpath('//span[contains(@class, "start-date")]/text()').extract_first().strip(), fuzzy = True))
+        item['end']         = tz.localize(parser.parse(response.xpath('//span[contains(@class, "end-date")]/text()').extract_first().strip(), fuzzy = True))
 
         yield item

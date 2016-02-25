@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class ArthouseSpider(Spider):
@@ -17,7 +18,7 @@ class ArthouseSpider(Spider):
             yield Request(url, callback=self.parse_exhibition)
 
     def parse_exhibition(self, response):
-        item = EventItem()
+        item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
         item['title']       = response.xpath('//div[contains(@id, "headerTitle")]//text()').extract_first().strip() \
@@ -26,12 +27,13 @@ class ArthouseSpider(Spider):
         item['description'] = ''.join(response.xpath('//div[contains(@id, "exhibition")]//hr/following-sibling::p//text()').extract()).strip()
         item['image']       = 'http://www.arthousegallery.com.au/' + response.xpath('//img//@src').extract_first()
 
-        season  = ''.join(map(unicode, response.xpath('//div[contains(@id, "headerSubTitle")]//text()[not(ancestor::em)]').extract())).strip()
-        match   = re.match(u'(?P<start>^[\d\w\s]+)[\s\-\–]*(?P<end>[\d\w\s]+$)', season, re.UNICODE)
+        season = ''.join(map(unicode, response.xpath('//div[contains(@id, "headerSubTitle")]//text()[not(ancestor::em)]').extract())).strip()
+        match  = re.match(u'(?P<start>^[\d\w\s]+)[\s\-\–]*(?P<end>[\d\w\s]+$)', season, re.UNICODE)
 
         if (match):
-            start = parser.parse(match.group('start'), fuzzy = True)
-            end   = parser.parse(match.group('end'), fuzzy = True)
+            tz    = timezone('Australia/Sydney')
+            start = tz.localize(parser.parse(match.group('start'), fuzzy = True))
+            end   = tz.localize(parser.parse(match.group('end'), fuzzy = True))
 
             if (re.match(u'^\d+$', match.group('start'), re.UNICODE)):
                 start = start.replace(month=end.month, year=end.year)

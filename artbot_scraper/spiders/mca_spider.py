@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class MCASpider(Spider):
@@ -12,21 +13,19 @@ class MCASpider(Spider):
 
     def parse(self, response):
         for event in response.xpath('//div[contains(@class, "featured_item")]'):
-            item = EventItem()
+            item                = EventItem()
             item['url']         = 'http://www.mca.com.au' + event.xpath('.//a/@href').extract_first()
             item['venue']       = self.name
             item['title']       = event.xpath('.//h2/text()').extract_first().strip()
             item['description'] = ''.join(event.xpath('.//div[@class="col-md-4"]/p[3]//text()').extract())
             item['image']       = 'http://www.mca.com.au' + event.xpath('.//div[contains(@class, "featured-image")]/@style').re_first('(?<=\().*(?=\))')
 
-            season  = event.xpath('.//b[contains(@class, "occurrence_date")]/text()').extract_first().strip().replace(u'\u2013\xa0', u'')
-            match   = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)
+            season = event.xpath('.//b[contains(@class, "occurrence_date")]/text()').extract_first().strip().replace(u'\u2013\xa0', u'')
+            match  = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)
 
             if (match):
-                start = parser.parse(match.group('start'))
-                end   = parser.parse(match.group('end'))
-
-                item['start']  = start
-                item['end']    = end
+                tz            = timezone('Australia/Sydney')
+                item['start'] = tz.localize(parser.parse(match.group('start')))
+                item['end']   = tz.localize(parser.parse(match.group('end')))
 
             yield item

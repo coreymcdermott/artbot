@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class TheCommercialSpider(Spider):
@@ -22,13 +23,10 @@ class TheCommercialSpider(Spider):
             match = re.search(u'(?P<start>\d+\/\d+\/\d+)[\s\-\–]*(?P<end>\d+\/\d+\/\d+)\:(?P<title>.*)', text, re.UNICODE)
 
             if (match):
-                start = parser.parse(match.group('start'), dayfirst = True)
-                end   = parser.parse(match.group('end'), dayfirst = True)
-                title = match.group('title').strip()
-
-                item['start'] = start
-                item['end']   = end
-                item['title'] = title
+                tz    = timezone('Australia/Sydney')
+                item['start'] = tz.localize(parser.parse(match.group('start'), dayfirst = True))
+                item['end']   = tz.localize(parser.parse(match.group('end'), dayfirst = True))
+                item['title'] = match.group('title').strip()
 
             yield Request(url, callback=self.parse_exhibition, meta={'item': item})
 
@@ -40,7 +38,7 @@ class TheCommercialSpider(Spider):
 
     def parse_artwork(self, response):
         item = response.meta['item']
-        
+
         item['image'] = response.urljoin(response.xpath('//div[contains(@class, "artwork-main-view ")]//img/@src').extract_first())
 
         yield item

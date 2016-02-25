@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class AmbushSpider(Spider):
@@ -17,21 +18,19 @@ class AmbushSpider(Spider):
             yield Request(url, callback=self.parse_event)
 
     def parse_event(self, response):
-        item = EventItem()
+        item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
         item['title']       = response.xpath('//h1/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(@class, "event_details")]//text()').extract())
         item['image']       = response.xpath('//figure[contains(@class, "amb_gal_img")]//img/@src').extract_first()
 
-        time = ''.join(response.xpath('//time//text()').extract())
-        match   = re.match('(?P<start>[a-zA-Z]+\d+)(?P<end>[a-zA-Z]+\d+)', time)
+        time  = ''.join(response.xpath('//time//text()').extract())
+        match = re.match('(?P<start>[a-zA-Z]+\d+)(?P<end>[a-zA-Z]+\d+)', time)
 
         if (match):
-            start = parser.parse(match.group('start'))
-            end   = parser.parse(match.group('end'))
-
-            item['start']  = start
-            item['end']    = end
+            tz            = timezone('Australia/Sydney')
+            item['start'] = tz.localize(parser.parse(match.group('start')))
+            item['end']   =  tz.localize(parser.parse(match.group('end')))
 
         yield item

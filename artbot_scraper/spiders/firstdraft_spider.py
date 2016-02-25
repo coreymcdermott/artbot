@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider, Request
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class FirstdraftSpider(Spider):
@@ -17,18 +18,19 @@ class FirstdraftSpider(Spider):
             yield Request(url, callback=self.parse_exhibition)
 
     def parse_exhibition(self, response):
-        item = EventItem()
+        item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
         item['title']       = response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]/h1/text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]//h3//text()').extract()).strip()
         item['image']       = response.xpath('//section[contains(concat(" ", @class, " "), " images_container ")]//img/@src').extract_first()
 
-        season  = response.xpath('//div[contains(concat(" ", @class, " "), " secondary ")]//p[contains(@class, "dateX")]//text()').extract_first().strip()
-        match   = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season, re.UNICODE)
+        season = response.xpath('//div[contains(concat(" ", @class, " "), " secondary ")]//p[contains(@class, "dateX")]//text()').extract_first().strip()
+        match  = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season, re.UNICODE)
 
         if (match):
-            item['start'] = parser.parse(match.group('start'), dayfirst = True)
-            item['end']   = parser.parse(match.group('end'),   dayfirst = True)
+            tz            = timezone('Australia/Sydney')
+            item['start'] = tz.localize(parser.parse(match.group('start'), dayfirst = True))
+            item['end']   = tz.localize(parser.parse(match.group('end'),   dayfirst = True))
 
         yield item

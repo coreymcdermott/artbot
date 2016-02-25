@@ -4,6 +4,7 @@ from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
+from pytz                 import timezone
 
 
 class MildMannersSpider(CrawlSpider):
@@ -13,7 +14,7 @@ class MildMannersSpider(CrawlSpider):
     rules           = (Rule(LinkExtractor(deny=('ABOUT', 'CONTACT')), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
-        item = EventItem()
+        item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
         item['title']       = ''.join(response.xpath('.//div[contains(@class, "project_content")]//b//text()').extract()).strip()
@@ -24,10 +25,8 @@ class MildMannersSpider(CrawlSpider):
         match  = re.search(u'(?P<start>\w+\s+\d+)[\s\-\–]*(?P<end>\d+)$', season, re.UNICODE)
 
         if (match):
-            start = parser.parse(match.group('start'))
-            end   = start.replace(day = int(match.group('end')))
-
-            item['start'] = start
-            item['end']   = end
+            tz            = timezone('Australia/Sydney')
+            item['start'] = tz.localize(parser.parse(match.group('start')))
+            item['end']   = item['start'].replace(day = int(match.group('end')))
 
         yield item

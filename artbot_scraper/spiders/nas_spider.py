@@ -3,6 +3,7 @@ import re
 from scrapy               import Spider
 from dateutil             import parser
 from artbot_scraper.items import EventItem
+from pytz                 import timezone
 
 
 class NationalArtSchoolSpider(Spider):
@@ -12,7 +13,7 @@ class NationalArtSchoolSpider(Spider):
 
     def parse(self, response):
         for detail in response.xpath('//div[contains(@class, "detail") and not(contains(*/h2, "Contacts & Opening Hours")) and not(contains(*/h2,"Current Exhibition and Events "))]'):
-            item = EventItem()
+            item                = EventItem()
             item['url']         = response.url
             item['venue']       = self.name
             item['title']       = detail.xpath('.//h2/text()').extract_first().strip()
@@ -20,14 +21,11 @@ class NationalArtSchoolSpider(Spider):
             item['image']       = 'http://www.nas.edu.au/' + detail.xpath('.//img/@src').extract_first()
 
             season = detail.xpath('.//span//text()').extract_first()
-
             match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)', unicode(season), re.UNICODE)
 
             if (match):
-                start = parser.parse(match.group('start'))
-                end   = parser.parse(match.group('end'))
-
-                item['start'] = start
-                item['end']   = end
+                tz            = timezone('Australia/Sydney')
+                item['start'] = tz.localize(parser.parse(match.group('start')))
+                item['end']   = tz.localize(parser.parse(match.group('end')))
 
             yield item

@@ -4,7 +4,7 @@ from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
-from pytz                 import timezone
+from pytz                  import timezone
 
 
 class MildMannersSpider(CrawlSpider):

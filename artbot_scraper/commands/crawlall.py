@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-from scrapy.commands      import ScrapyCommand
-from scrapy.utils.project import get_project_settings
-from scrapy.crawler       import CrawlerProcess
+import logging
+from scrapy.commands                import ScrapyCommand
+from scrapy.utils.project           import get_project_settings
+from scrapy.crawler                 import CrawlerProcess
+from scrapy.utils.log               import configure_logging
+from artbot_website.loggingHandlers import DatabaseLogHandler
 
 
 class Command(ScrapyCommand):
@@ -15,6 +18,11 @@ class Command(ScrapyCommand):
 
     def run(self, args, opts):
         crawler_process = CrawlerProcess(get_project_settings())
+
+        configure_logging(install_root_handler=False)
+        logger = logging.getLogger()
+        databaseLogHandler = DatabaseLogHandler()
+        logger.addHandler(databaseLogHandler)
 
         for spider_name in crawler_process.spider_loader.list():
             spider_cls = crawler_process.spider_loader.load(spider_name)

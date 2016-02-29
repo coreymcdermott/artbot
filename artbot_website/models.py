@@ -11,8 +11,8 @@ class Event(models.Model):
     url         = models.TextField()
     venue       = models.TextField()
     title       = models.TextField()
-    titleRaw    = models.TextField()
-    description = models.TextField(blank = True, null = True)
+    titleRaw    = models.TextField(blank = True, null = True)
+    description = models.TextField()
     image       = models.TextField()
     start       = models.DateTimeField(blank = True, null = True)
     end         = models.DateTimeField(blank = True, null = True)
@@ -55,3 +55,8 @@ class Event(models.Model):
             else:
                 self.image = 'https://s3-ap-southeast-2.amazonaws.com/artbot.io/' + key
                 self.save()
+
+class Log(models.Model):
+    level     = models.TextField()
+    message   = models.TextField()
+    timestamp = models.DateTimeField('timestamp', null=True, blank=True)

@@ -1,7 +1,7 @@
 from django.contrib       import admin, messages
 from django.contrib.admin import SimpleListFilter
 from datetime             import date, datetime, timedelta
-from .models              import Event
+from .models              import Event, Log
 
 
 class EventWeekendFilter(SimpleListFilter):
@@ -60,3 +60,17 @@ class EventAdmin(admin.ModelAdmin):
     actions       = [publish, withdraw, crop_image]
 
 admin.site.register(Event, EventAdmin)
+
+class LogAdmin(admin.ModelAdmin):
+    ordering      = ('-timestamp',)
+    list_display  = ('level', 'message', 'timestamp',)
+    list_filter   = ('level',)
+    search_fields = ('level','message',)
+
+    def has_add_permission(self, request):
+        return False
+
+    def get_readonly_fields(self, request, obj=None):
+        return self.readonly_fields + ('level', 'message', 'timestamp')
+
+admin.site.register(Log, LogAdmin)

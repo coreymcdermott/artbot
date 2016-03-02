@@ -63,7 +63,7 @@ admin.site.register(Event, EventAdmin)
 
 class LogAdmin(admin.ModelAdmin):
     ordering      = ('-timestamp',)
-    list_display  = ('level', 'message', 'timestamp',)
+    list_display  = ('timestamp', 'level', 'message',)
     list_filter   = ('level',)
     search_fields = ('level','message',)
 

@@ -1,13 +1,13 @@
 from datetime                    import date, datetime, timedelta
-from django.core.management.base import NoArgsCommand, CommandError
+from django.core.management.base import BaseCommand, CommandError
 from artbot_website.models       import Event, Log
 # from django.conf                 import settings
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     args = 'None.'
     help = 'Performs housekeeping operations.'
 
-    def handle_noargs(self, *args, **options):
+    def handle(self, *args, **options):
         # Delete logs older than 3 days.
         cutoff = datetime.now() - timedelta(days=3)
         logs   = Log.objects.filter(timestamp__lt=cutoff)

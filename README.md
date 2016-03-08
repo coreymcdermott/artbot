@@ -32,6 +32,10 @@ Artbot is currently focused on galleries in Sydney, Australia.
   * AWS_SECRET_ACCESS_KEY
   * AWS_DEFAULT_REGION
   * AWS_S3_BUCKET
+  * MAILGUN_SERVER_NAME
+  * MAILGUN_ACCESS_KEY
+  * SERVER_EMAIL
+  * ADMIN_EMAIL
 3. Run `$ pip install -r requirements.txt`.
 4. Run `$ python manage.py collectstatic`.
 5. Run `$ python manage.py scrapy crawllall`.

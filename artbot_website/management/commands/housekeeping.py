@@ -1,7 +1,6 @@
 from datetime                    import date, datetime, timedelta
 from django.core.management.base import BaseCommand, CommandError
 from artbot_website.models       import Event, Log
-# from django.conf                 import settings
 
 class Command(BaseCommand):
     args = 'None.'

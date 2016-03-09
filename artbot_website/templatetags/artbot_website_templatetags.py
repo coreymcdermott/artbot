@@ -12,3 +12,11 @@ def conditional_date(date):
         return format(date, 'j M')
     else:
         return format(date, 'j M, Y')
+
+@register.filter
+def badge_date(date):
+    now = datetime.datetime.now().date()
+    if now - date.date() < datetime.timedelta(days=7):
+        return 'New'
+    else:
+        return False

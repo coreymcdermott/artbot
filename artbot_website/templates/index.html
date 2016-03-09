@@ -26,7 +26,7 @@
           <a href="{{ event.url }}">
             <img src="{{ event.image }}"></img>
             <h3>{{ event.title }}</h3>
-            <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}</p>
+            <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}{% if event.start|badge_date %} <span class="badge">{{ event.start|badge_date }}</span>{% endif %}</p>
             <p>{{ event.description }}</p>
           </a>
         </li>

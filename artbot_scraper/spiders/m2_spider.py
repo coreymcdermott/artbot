@@ -12,7 +12,7 @@ class M2Spider(Spider):
     start_urls      = ['http://m2gallery.com.au/Exhibitions.aspx']
 
     def parse(self, response):
-        for href in response.xpath('//ul//li//a/@href'):
+        for href in response.xpath('//div[contains(@id, "dnn_ctr430_ExbList_pnlList")]//ul//li//a/@href'):
             url = response.urljoin(href.extract())
 
             yield Request(url, callback=self.parse_exhibition)

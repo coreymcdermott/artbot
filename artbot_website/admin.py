@@ -2,6 +2,7 @@ from django.contrib       import admin, messages
 from django.contrib.admin import SimpleListFilter
 from datetime             import date, datetime, timedelta
 from .models              import Event, Log
+from pytz                 import timezone
 
 
 class EventWeekendFilter(SimpleListFilter):
@@ -15,16 +16,17 @@ class EventWeekendFilter(SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
+        now = datetime.now(timezone('Australia/Sydney')).date()
 
-        if date.today().isoweekday() in [5, 6, 7]:
-            this_weekend_start = date.today()
+        if now.isoweekday() in [5, 6, 7]:
+            this_weekend_start = now
         else:
-            this_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7)
+            this_weekend_start = now + timedelta((5 - now.isoweekday()) % 7)
 
-        if date.today().isoweekday() == 5:
-            next_weekend_start = date.today() + timedelta(days = 7)
+        if now.isoweekday() == 5:
+            next_weekend_start = now + timedelta(days = 7)
         else:
-            next_weekend_start = date.today() + timedelta((5 - date.today().isoweekday()) % 7) + timedelta(days = 7)
+            next_weekend_start = now + timedelta((5 - now.isoweekday()) % 7) + timedelta(days = 7)
 
         if self.value() == 'THIS_WEEKEND':
             return queryset.filter(start__lte = this_weekend_start, end__gte = this_weekend_start)

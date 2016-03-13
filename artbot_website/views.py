@@ -6,6 +6,7 @@ from pytz             import timezone
 
 def index(request):
     now = datetime.now(timezone('Australia/Sydney')).date()
+
     if now.isoweekday() in [5, 6, 7]:
         weekend_start = now
     else:

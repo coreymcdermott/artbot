@@ -32,6 +32,25 @@ class EventWeekendFilter(SimpleListFilter):
             return queryset.filter(start__lte = next_weekend_start, end__gte = next_weekend_start)
 
 
+class EventStartFilter(SimpleListFilter):
+    title = ('start')
+    parameter_name = 'start'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('FUTURE', ('Future')),
+            ('PAST', ('Past')),
+        )
+
+    def queryset(self, request, queryset):
+        today = date.today()
+
+        if self.value() == 'FUTURE':
+            return queryset.filter(start__gte = today)
+        elif self.value() == 'PAST':
+            return queryset.filter(start__lt = today)
+
+
 def publish(modeladmin, request, queryset):
     queryset.update(published = True)
 publish.short_description = "Publish"
@@ -53,7 +72,7 @@ crop_image.short_description = "Crop and transload images"
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_filter   = ('published', EventWeekendFilter,)
+    list_filter   = ('published', EventWeekendFilter, EventStartFilter)
     list_display  = ('title', 'venue', 'start', 'end', 'created', 'published')
     search_fields = ('title', 'venue')
     exclude       = ('titleRaw',)

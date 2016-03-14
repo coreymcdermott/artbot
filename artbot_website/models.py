@@ -60,3 +60,13 @@ class Log(models.Model):
     level     = models.TextField()
     message   = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class Sponsor(models.Model):
+    url         = models.TextField()
+    title       = models.TextField()
+    description = models.TextField()
+    image       = models.TextField()
+    start       = models.DateTimeField()
+    end         = models.DateTimeField()
+    created     = models.DateTimeField(auto_now_add=True)
+    published   = models.BooleanField(default=False)

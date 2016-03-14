@@ -1,7 +1,7 @@
 from django.contrib       import admin, messages
 from django.contrib.admin import SimpleListFilter
 from datetime             import date, datetime, timedelta
-from .models              import Event, Log
+from .models              import Event, Log, Sponsor
 from pytz                 import timezone
 
 
@@ -82,11 +82,12 @@ class EventAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 
+
 class LogAdmin(admin.ModelAdmin):
     ordering      = ('-timestamp',)
-    list_display  = ('timestamp', 'level', 'message',)
+    list_display  = ('timestamp', 'level', 'message')
     list_filter   = ('level',)
-    search_fields = ('level','message',)
+    search_fields = ('level','message')
 
     def has_add_permission(self, request):
         return False
@@ -95,3 +96,12 @@ class LogAdmin(admin.ModelAdmin):
         return self.readonly_fields + ('level', 'message', 'timestamp')
 
 admin.site.register(Log, LogAdmin)
+
+
+class SponsorAdmin(admin.ModelAdmin):
+    list_filter   = ('published',)
+    list_display  = ('title', 'start', 'end', 'published',)
+    search_fields = ('title',)
+    actions       = [publish, withdraw]
+
+admin.site.register(Sponsor, SponsorAdmin)

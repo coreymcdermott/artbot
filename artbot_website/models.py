@@ -11,13 +11,13 @@ class Event(models.Model):
     url         = models.TextField()
     venue       = models.TextField()
     title       = models.TextField()
-    titleRaw    = models.TextField(blank = True, null = True)
-    description = models.TextField()
+    titleRaw    = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     image       = models.TextField()
-    start       = models.DateTimeField(blank = True, null = True)
-    end         = models.DateTimeField(blank = True, null = True)
-    created     = models.DateTimeField(default = timezone.now)
-    published   = models.BooleanField(default = False)
+    start       = models.DateTimeField(blank=True, null=True)
+    end         = models.DateTimeField(blank=True, null=True)
+    created     = models.DateTimeField(auto_now_add=True)
+    published   = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('venue', 'titleRaw')
@@ -59,4 +59,4 @@ class Event(models.Model):
 class Log(models.Model):
     level     = models.TextField()
     message   = models.TextField()
-    timestamp = models.DateTimeField('timestamp', null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)

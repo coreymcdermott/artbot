@@ -2,7 +2,7 @@
 import logging
 from scrapy.commands                import ScrapyCommand
 from scrapy.utils.log               import configure_logging
-from artbot_website.loggingHandlers import DatabaseLogHandler
+from artbot_website.logging_handlers import DatabaseLogHandler
 
 
 class Command(ScrapyCommand):

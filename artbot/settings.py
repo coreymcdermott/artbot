@@ -64,7 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'artbot_websote.context_processors.google_analytics',
+                'artbot_website.context_processors.google_analytics',
             ],
         },
     },
@@ -115,3 +115,8 @@ MAILGUN_ACCESS_KEY  = os.environ.get('MAILGUN_ACCESS_KEY')
 MAILGUN_SERVER_NAME = os.environ.get('MAILGUN_SERVER_NAME')
 SERVER_EMAIL        = os.environ.get('SERVER_EMAIL')
 ADMIN_EMAIL         = os.environ.get('ADMIN_EMAIL')
+
+# Google Analytics
+
+GOOGLE_ANALYTICS_PROPERTY_ID = os.environ.get('GOOGLE_ANALYTICS_PROPERTY_ID')
+GOOGLE_ANALYTICS_DOMAIN      = os.environ.get('GOOGLE_ANALYTICS_DOMAIN')

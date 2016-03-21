@@ -1,5 +1,7 @@
 ## Artbot
 
+I believe that art should be accessible to everyone.
+
 Artbot lists exhibitions open in the coming weekend, automatically scraping data from gallery websites.
 
 Artbot is written in Python and built on [Django](http://scrapy.org) and [Scrapy](http://scrapy.org).

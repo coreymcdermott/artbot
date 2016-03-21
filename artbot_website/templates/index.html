@@ -23,19 +23,57 @@
     </div>
     <div>
       {% if events %}
-      <ul>
-        {% for event in events %}
-        <li>
-          <a href="{{ event.url }}">
-            <img src="{{ event.image }}"></img>
-            <h3>{{ event.title }}</h3>
-            <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}{% if event.start|badge_date %} <span class="badge">{{ event.start|badge_date }}</span>{% endif %}</p>
-            <p>{{ event.description }}</p>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
+      <div class="content">
+        <ul>
+          {% for event in events %}
+          <li>
+            <a href="{{ event.url }}">
+              <img src="{{ event.image }}"></img>
+              <h3>{{ event.title }}</h3>
+              <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}{% if event.start|badge_date %} <span class="badge">{{ event.start|badge_date }}</span>{% endif %}</p>
+              <p>{{ event.description }}</p>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
       {% endif %}
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <h3>About</h3>
+          <p>I believe that art should be accessible to everyone.</p>
+          <p>Artbot lists exhibitions open in the coming weekend, automatically scraping data from gallery websites.</p>
+          <p>Reach out at <a href="mailto:hello@artbot.io">hello@artbot.io</a>,
+            and download the source code from <a href="https://github.com/coreymcdermott/artbot">GitHub</a>.</p>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <h3>Galleries</h3>
+          <p>Artbot is currently focused on galleries in Sydney, Australia.</p>
+          <ul>
+            <li><a href="http://107projects.org/whats-on/?type=exhibition">107 Projects</a></li>
+            <li><a href="http://ambushgallery.com/">aMBUSH Gallery</a></li>
+            <li><a href="http://www.artgallery.nsw.gov.au">Art Gallery of NSW</a></li>
+            <li><a href="http://www.arthousegallery.com.au">Arthouse Gallery</a></li>
+            <li><a href="http://firstdraft.org.au">Firstdraft</a></li>
+            <li><a href="http://www.galeriepompom.com/">Galerie pompom</a></li>
+            <li><a href="http://m2gallery.com.au">m2 Gallery</a></li>
+            <li><a href="http://mild-manners.com/JEDDA-DAISY-CULLEY-UNIVERSAL-LOVE">Mild Manners</a></li>
+            <li><a href="http://www.mca.com.au">Museum of Contemporary Art Australia</a></li>
+            <li><a href="http://www.nas.edu.au/NASGallery/Current-Exhibition-and-Events">National Art School</a></li>
+            <li><a href="http://www.sarahcottiergallery.com/">Sarah Cottier Gallery</a></li>
+            <li><a href="http://thecommercialgallery.com/">The Commercial</a></li>
+            <li><a href="https://www.artdesign.unsw.edu.au/unsw-galleries">UNSW Galleries</a></li>
+            <li><a href="http://art.uts.edu.au/">UTS ART</a></li>
+          </ul>
+        </div>
+      </div>
+      </div>
+
+
     </div>
   </div>
 </body>

@@ -28,7 +28,7 @@ ul {
   padding: 0;
 }
 
-li img {
+.content li img {
   margin: 0 0 0.5rem 0;
   width: 100%;
   height: 200px;
@@ -36,7 +36,7 @@ li img {
 }
 
 @media (min-device-width : 737px) {
-  li img {
+.content li img {
     margin: 0 0 0.5rem 0;
     width: 100%;
     height: 300px;
@@ -49,7 +49,7 @@ li p {
   clear: none;
 }
 
-li a, a:link, a:visited, a:active, a:hover {
+.content li a, a:link, a:visited, a:active, a:hover {
   color: #333;
   text-decoration: none !important;
 }
@@ -68,5 +68,21 @@ li {
 }
 
 .badge {
-  background-color: #333333;
+  background-color: #333;
+}
+
+.footer {
+  color: #fff;
+  background-color: #333;
+  margin: 0 0 0 0;
+  padding: 1.5rem 0 1.5rem 0;
+}
+
+.footer a, a:link, a:visited, a:active, a:hover  {
+  text-decoration: underline !important;
+  color: #fff;
+}
+
+.footer li {
+    margin-bottom: 0;
 }

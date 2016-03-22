@@ -14,6 +14,8 @@ class AGNSpider(Spider):
     def parse(self, response):
         for href in response.xpath('//div[contains(@class, "currentExhibition")]//a[1]/@href'):
             url = response.urljoin(href.extract())
+            if 'brett-whiteley-studio' in url:
+                continue
 
             yield Request(url, callback=self.parse_current_exhibition)
 

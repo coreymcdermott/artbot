@@ -13,8 +13,12 @@ class MCASpider(Spider):
 
     def parse(self, response):
         for event in response.xpath('//div[contains(@class, "featured_item")]'):
+            url = event.xpath('.//a/@href').extract_first()
+            if 'mca-collection' in url:
+                continue
+
             item                = EventItem()
-            item['url']         = 'http://www.mca.com.au' + event.xpath('.//a/@href').extract_first()
+            item['url']         = response.urljoin(url)
             item['venue']       = self.name
             item['title']       = event.xpath('.//h2/text()').extract_first().strip()
             item['description'] = ''.join(event.xpath('.//div[@class="col-md-4"]/p[3]//text()').extract())

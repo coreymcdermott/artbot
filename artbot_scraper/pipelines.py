@@ -10,8 +10,9 @@ class EventPipeline(object):
         item['titleRaw'] = item['title']
         item['title']    = titlecase(item['title'])
 
-        if (item['end'] < item['start']):
-            item['end'] = item['end'] + relativedelta.relativedelta(years =+ 1)
+        if 'end' in item and 'start' in item:
+            if (item['end'] < item['start']):
+                item['end'] = item['end'] + relativedelta.relativedelta(years =+ 1)
 
         try:
             item.save()

@@ -21,8 +21,8 @@ class OneZeroSevenProjectsSpider(CrawlSpider):
         item['description'] = ''.join(response.xpath('//b[contains(text(),"COST:")]//parent::h4/following-sibling::p[1]/text()').extract()).strip()
         item['image']       = response.xpath('//section[contains(@class, "article-content")]//img/@src').extract_first()
 
-        season = response.xpath('//b[contains(text(),"WHEN:")]//parent::h4/text()').extract_first().strip()
-        match  = re.match('[\w+\s]*(?P<start>\d+\s+\w+\s+\d+)[\s\-]*(?P<end>\d+\s+\w+\s+\d+)', season)
+        season = response.xpath('//b[contains(text(),"WHEN:")]//parent::h4/text()').extract_first().translate(dict.fromkeys(map(ord, u'\t\n\u2013'), None)).strip()
+        match  = re.match(u'(?P<start>\d+\s+\w+\s+\d+)[\s\-]*(?P<end>\d+\s+\w+\s+\d+)', season)
 
         if (match):
             tz            = timezone('Australia/Sydney')

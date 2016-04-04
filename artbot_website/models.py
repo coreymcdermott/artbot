@@ -45,15 +45,17 @@ class Event(models.Model):
             else:
                 raise ValueError('Unable to determine image bounding box')
 
-            key = self.venue + '-' + self.description.replace(" ", "_") + '-' + self.start.strftime("%y-%m-%d") + '.jpg'
-            s3 = boto3.resource('s3')
+            s3     = boto3.resource('s3')
+            region = os.environ.get('AWS_DEFAULT_REGION')
+            bucket = s3.Bucket(os.environ.get('AWS_S3_BUCKET'))
+            key    = self.venue.replace(" ", "_") + '-' + self.titleRaw.replace(" ", "_") + '-' + self.start.strftime("%y-%m-%d") + '.jpg'
 
             try:
-                s3.Bucket(os.environ.get('AWS_S3_BUCKET')).put_object(Key = key, Body = image_out.getvalue(), ACL='public-read')
+                bucket.put_object(Key = key, Body = image_out.getvalue(), ACL='public-read')
             except:
                 raise
             else:
-                self.image = 'https://s3-ap-southeast-2.amazonaws.com/artbot.io/' + key
+                self.image = 'http://s3-{}.amazonaws.com/{}/{}'.format(region, bucket.name, key)
                 self.save()
 
 class Log(models.Model):

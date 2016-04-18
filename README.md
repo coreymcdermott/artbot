@@ -40,6 +40,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
   * MAILGUN_ACCESS_KEY
   * SERVER_EMAIL
   * ADMIN_EMAIL
+  * LOG_RETENTION
 3. Run `$ pip install -r requirements.txt`.
 4. Run `$ python manage.py collectstatic`.
 5. Run `$ python manage.py scrapy all`.

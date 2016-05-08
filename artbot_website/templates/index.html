@@ -10,6 +10,8 @@
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/artbot.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
   {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
     {% include "google_analytics.html" %}
   {% endif %}
@@ -27,12 +29,11 @@
         <ul>
           {% for event in events %}
           <li>
-            <a href="{{ event.url }}">
               <img src="{{ event.image }}"></img>
               <h3>{{ event.title }}</h3>
               <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}{% if event.start|badge_date %} <span class="badge">{{ event.start|badge_date }}</span>{% endif %}</p>
               <p>{{ event.description }}</p>
-            </a>
+              <p><a href="{{ event.url }}" target="_blank">Exhibition Website</a></p>
           </li>
           {% endfor %}
         </ul>

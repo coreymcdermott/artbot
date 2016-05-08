@@ -51,7 +51,7 @@ li p {
 
 .content li a, a:link, a:visited, a:active, a:hover {
   color: #333;
-  text-decoration: none !important;
+  text-decoration: underline !important;
 }
 
 li {
@@ -85,4 +85,32 @@ li {
 
 .footer li {
     margin-bottom: 0;
+}
+
+
+a[href^="http://"]:after {
+  content: "\f08e";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: none;
+  padding-left: 3px;
+}
+
+a[href^="https://"]:after {
+  content: "\f08e";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: none;
+  padding-left: 3px;
+}
+
+/* Strip from links to own domain or with class no_icon */
+a[href^="http://artbot.io"]:after,
+a.no_icon:after {
+  content:"" !important;
+  padding-left: 0;
 }

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import pdb
 import re
 from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
@@ -17,16 +18,23 @@ class PompomSpider(CrawlSpider):
         item          = EventItem()
         item['url']   = response.url
         item['venue'] = self.name
-        item['title'] = response.xpath('//div[@class = "position_content"]/div[3]/p[1]/text()').extract_first().strip() + ' - ' +\
-                        response.xpath('//div[@class = "position_content"]/div[3]/p[2]/text()').extract_first().strip()
-        item['image'] = response.urljoin(response.xpath('//div[contains(@class, "SSSlide")]//img/@data-src').extract_first())
+        item['title'] = response.xpath('//div[@id = "page"]/div[3]/p[1]/text()').extract_first().strip() + ' - ' +\
+                        response.xpath('//div[@id = "page"]/div[3]/p[2]/text()').extract_first().strip()
+        item['image'] = response.urljoin(response.xpath('//div[contains(@class, "SlideShowWidget")]//img/@data-src').extract_first())
 
-        season = response.xpath('//div[@class = "position_content"]/div[3]/p[4]/text()').extract_first().strip()
-        match  = re.match('(?P<start>\d+[\s+\w+]*)[\s\-]*(?P<end>\d+\s+\w+\s+\d+)', season)
+        season = response.xpath('//div[@id = "page"]/div[3]/p[3]/text()').extract_first().strip() +\
+                 response.xpath('//div[@id = "page"]/div[3]/p[4]/text()').extract_first().strip()
+        match  = re.match('(?P<start>[\d+\s+\w+]*)[\s\-]*(?P<end>\d+\s+\w+\s+\d+)', season)
 
         if (match):
             tz            = timezone('Australia/Sydney')
             item['start'] = tz.localize(parser.parse(match.group('start')))
-            item['end']   = tz.localize(parser.parse(match.group('end')))
+
+            if len(match.group('start')) <= 2:
+                item['end']   = item['start'].replace(day = int(match.group('start')))
+            else:
+                item['end']   = tz.localize(parser.parse(match.group('end')))
+
+        #    pdb.set_trace()
 
         yield item

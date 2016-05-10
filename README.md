@@ -29,6 +29,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
 
 1. Clone this repo.
 2. Ensure that the following environmental variables are set:
+  * DEBUG
   * ALLOWED_HOSTS
   * SECRET_KEY
   * DATABASE_URL

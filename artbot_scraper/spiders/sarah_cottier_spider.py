@@ -30,5 +30,8 @@ class SarahCottierGallery(CrawlSpider):
             item['end']   = tz.localize(parser.parse(match.group('end')))
             item['start'] = tz.localize(parser.parse(match.group('start')))
             item['title'] = match.group('title').strip()
+        else:
+            # Can't extract end, start, and title - Dump whole string into title, fix manually via admin.
+            item['title'] = alt
 
         yield item

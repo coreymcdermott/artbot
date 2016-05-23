@@ -15,7 +15,9 @@ class M2Spider(Spider):
         for href in response.xpath('//div[contains(@id, "dnn_ctr430_ExbList_pnlList")]//ul//li//a/@href'):
             url = response.urljoin(href.extract())
 
-            yield Request(url, callback=self.parse_exhibition)
+            request = Request(url, callback=self.parse_exhibition)
+            request.meta['dont_redirect'] = True
+            yield request
 
     def parse_exhibition(self, response):
         item                = EventItem()

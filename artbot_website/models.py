@@ -8,6 +8,16 @@ from StringIO     import StringIO
 
 
 class Event(models.Model):
+    DRAFT_STATUS     = 0
+    PUBLISHED_STATUS = 1
+    HIDDEN_STATUS    = 2
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (PUBLISHED_STATUS, 'Published'),
+        (HIDDEN_STATUS, 'Hidden'),
+    )
+
     url         = models.TextField()
     venue       = models.TextField()
     title       = models.TextField()
@@ -17,7 +27,7 @@ class Event(models.Model):
     start       = models.DateTimeField(blank=True, null=True)
     end         = models.DateTimeField(blank=True, null=True)
     created     = models.DateTimeField(auto_now_add=True)
-    published   = models.BooleanField(default=False)
+    status      = models.IntegerField(choices=STATUS_CHOICES, default=DRAFT_STATUS)
 
     class Meta:
         unique_together = ('venue', 'titleRaw')

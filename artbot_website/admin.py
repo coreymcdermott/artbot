@@ -54,13 +54,18 @@ class EventStartFilter(SimpleListFilter):
 
 
 def publish(modeladmin, request, queryset):
-    queryset.update(published = True)
+    queryset.update(status = Event.PUBLISHED_STATUS)
 publish.short_description = "Publish"
 
 
 def withdraw(modeladmin, request, queryset):
-    queryset.update(published = False)
+    queryset.update(status = Event.DRAFT_STATUS)
 withdraw.short_description = "Withdraw"
+
+
+def hide(modeladmin, request, queryset):
+    queryset.update(status = Event.HIDDEN_STATUS)
+hide.short_description = "Hide"
 
 
 def crop_image(modeladmin, request, queryset):
@@ -74,11 +79,11 @@ crop_image.short_description = "Crop and transload images"
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_filter   = ('published', EventWeekendFilter, EventStartFilter)
-    list_display  = ('title', 'venue', 'start', 'end', 'created', 'published')
+    list_filter   = ('status', EventWeekendFilter, EventStartFilter)
+    list_display  = ('title', 'venue', 'start', 'end', 'created', 'status')
     search_fields = ('title', 'venue')
     exclude       = ('titleRaw',)
-    actions       = [publish, withdraw, crop_image]
+    actions       = [publish, withdraw, hide, crop_image]
 
 admin.site.register(Event, EventAdmin)
 

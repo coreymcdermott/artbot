@@ -13,7 +13,7 @@ class AmbushSpider(Spider):
 
     def parse(self, response):
         for href in response.xpath('//a[contains(@class, "project")]/@href'):
-            url = response.urljoin(base_url, href.extract())
+            url = response.urljoin(href.extract())
 
             yield Request(url, callback=self.parse_event)
 

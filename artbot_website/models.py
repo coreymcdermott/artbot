@@ -73,12 +73,26 @@ class Log(models.Model):
     message   = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-class Sponsor(models.Model):
+class SponsoredContent(models.Model):
+    DRAFT_STATUS     = 0
+    PUBLISHED_STATUS = 1
+
+    STATUS_CHOICES = (
+        (DRAFT_STATUS, 'Draft'),
+        (PUBLISHED_STATUS, 'Published'),
+    )
+
     url         = models.TextField()
+    url_text    = models.TextField()
+    sponsor     = models.TextField()
     title       = models.TextField()
     description = models.TextField()
     image       = models.TextField()
-    start       = models.DateTimeField()
-    end         = models.DateTimeField()
+    start       = models.DateTimeField(blank=True, null=True)
+    end         = models.DateTimeField(blank=True, null=True)
     created     = models.DateTimeField(auto_now_add=True)
-    published   = models.BooleanField(default=False)
+    status      = models.IntegerField(choices=STATUS_CHOICES, default=DRAFT_STATUS)
+
+    class Meta:
+        verbose_name = 'Sponsored content'
+        verbose_name_plural = 'Sponsored content'

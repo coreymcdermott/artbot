@@ -1,7 +1,7 @@
 from django.contrib       import admin, messages
 from django.contrib.admin import SimpleListFilter
 from datetime             import date, datetime, timedelta
-from .models              import Event, Log, Sponsor
+from .models              import Event, Log, SponsoredContent
 from pytz                 import timezone
 
 
@@ -79,9 +79,9 @@ crop_image.short_description = "Crop and transload images"
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_filter   = ('status', EventWeekendFilter, EventStartFilter)
-    list_display  = ('title', 'venue', 'start', 'end', 'created', 'status')
-    search_fields = ('title', 'venue')
+    list_filter   = ('status', EventWeekendFilter, EventStartFilter,)
+    list_display  = ('title', 'venue', 'start', 'end', 'created', 'status',)
+    search_fields = ('title', 'venue',)
     exclude       = ('titleRaw',)
     actions       = [publish, withdraw, hide, crop_image]
 
@@ -90,23 +90,23 @@ admin.site.register(Event, EventAdmin)
 
 class LogAdmin(admin.ModelAdmin):
     ordering      = ('-timestamp',)
-    list_display  = ('timestamp', 'level', 'message')
+    list_display  = ('timestamp', 'level', 'message',)
     list_filter   = ('level',)
-    search_fields = ('level','message')
+    search_fields = ('level','message',)
 
     def has_add_permission(self, request):
         return False
 
     def get_readonly_fields(self, request, obj=None):
-        return self.readonly_fields + ('level', 'message', 'timestamp')
+        return self.readonly_fields + ('level', 'message', 'timestamp',)
 
 admin.site.register(Log, LogAdmin)
 
 
-class SponsorAdmin(admin.ModelAdmin):
-    list_filter   = ('published',)
-    list_display  = ('title', 'start', 'end', 'published',)
-    search_fields = ('title',)
-    actions       = [publish, withdraw]
+class SponsoredContentAdmin(admin.ModelAdmin):
+    list_filter   = ('status',)
+    list_display  = ('sponsor','title', 'start', 'end', 'status',)
+    search_fields = ('sponsor','title',)
 
-admin.site.register(Sponsor, SponsorAdmin)
+
+admin.site.register(SponsoredContent, SponsoredContentAdmin)

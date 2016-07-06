@@ -21,7 +21,7 @@ class Event(models.Model):
     url         = models.TextField()
     venue       = models.TextField()
     title       = models.TextField()
-    titleRaw    = models.TextField()
+    title_raw   = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     image       = models.TextField(blank=True, null=True)
     start       = models.DateTimeField(blank=True, null=True)
@@ -30,7 +30,7 @@ class Event(models.Model):
     status      = models.IntegerField(choices=STATUS_CHOICES, default=DRAFT_STATUS)
 
     class Meta:
-        unique_together = ('venue', 'titleRaw')
+        unique_together = ('venue', 'title_raw')
 
     def __unicode__(self):
         return self.title

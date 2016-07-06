@@ -7,7 +7,7 @@ from dateutil          import parser, relativedelta
 
 class EventPipeline(object):
     def process_item(self, item, spider):
-        item['titleRaw'] = item['title']
+        item['title_raw'] = item['title']
         item['title']    = titlecase(item['title'])
 
         if 'end' in item and 'start' in item:

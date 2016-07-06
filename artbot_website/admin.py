@@ -82,7 +82,7 @@ class EventAdmin(admin.ModelAdmin):
     list_filter   = ('status', EventWeekendFilter, EventStartFilter,)
     list_display  = ('title', 'venue', 'start', 'end', 'created', 'status',)
     search_fields = ('title', 'venue',)
-    exclude       = ('titleRaw',)
+    exclude       = ('title_raw',)
     actions       = [publish, withdraw, hide, crop_image]
 
 admin.site.register(Event, EventAdmin)

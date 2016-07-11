@@ -20,7 +20,7 @@ class Command(BaseCommand):
         else:
             message += 'No New Events\n'
 
-        unpublished_events = Event.objects.filter(start__gte=today, status=Event.DRAFT_STATUS).order_by('start')
+        unpublished_events = Event.objects.filter(end__gte=today, status=Event.DRAFT_STATUS).order_by('start')
         if unpublished_events:
             message += '\nUnpublished Events\n\n'
             for event in unpublished_events:

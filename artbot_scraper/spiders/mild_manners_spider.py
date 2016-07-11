@@ -6,12 +6,11 @@ from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
 from pytz                  import timezone
 
-
 class MildMannersSpider(CrawlSpider):
     name            = 'Mild Manners'
     allowed_domains = ['mild-manners.com']
     start_urls      = ['http://mild-manners.com/']
-    rules           = (Rule(LinkExtractor(deny=('ABOUT', 'CONTACT')), callback='parse_exhibition'),)
+    rules           = (Rule(LinkExtractor(deny=('ABOUT', 'CONTACT', 'filter')), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
         item                = EventItem()
@@ -22,11 +21,13 @@ class MildMannersSpider(CrawlSpider):
         item['image']       = response.xpath('.//div[contains(@class, "project_content")]//img/@src').extract_first()
 
         season = response.xpath('.//div[contains(@class, "project_content")]//b/following-sibling::text()[2]').extract_first()
-        match  = re.search(u'(?P<start>\w+\s+\d+)[\s\-\–]*(?P<end>\d+)$', season, re.UNICODE)
 
-        if (match):
-            tz            = timezone('Australia/Sydney')
-            item['start'] = tz.localize(parser.parse(match.group('start')))
-            item['end']   = item['start'].replace(day = int(match.group('end')))
+        if season is not None:
+            match  = re.search('(?P<start>\w+\s+\d+)[\s\-\–]*(?P<end>\d+)', season, re.MULTILINE)
+
+            if (match):
+                tz            = timezone('Australia/Sydney')
+                item['start'] = tz.localize(parser.parse(match.group('start')))
+                item['end']   = item['start'].replace(day = int(match.group('end')))
 
         yield item

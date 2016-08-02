@@ -44,7 +44,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
   * LOG_RETENTION
 3. Run `$ pip install -r requirements.txt`.
 4. Run `$ python manage.py collectstatic`.
-5. Run `$ python manage.py scrapy all`.
+5. Run `$ python manage.py crawl all`.
 6. Run `$ python manage.py runserver`.
 
 ## License

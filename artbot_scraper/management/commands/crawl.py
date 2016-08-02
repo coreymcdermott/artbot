@@ -5,10 +5,12 @@ from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):
 
-    def run_from_argv(self, argv):
-        self._argv = argv
-        self.execute()
+    def add_arguments(self, parser):
+        parser.add_argument('crawler')
 
     def handle(self, *args, **options):
         from scrapy.cmdline import execute
-        execute(self._argv[1:])
+        if options['crawler'] == 'all':
+            execute(['scrapy', 'all'])
+        else:
+            execute(['scrapy', 'crawl', options['crawler']])

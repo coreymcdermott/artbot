@@ -24,6 +24,7 @@ Artbot is currently focused on galleries in Sydney, Australia.
 * [The Commercial](http://thecommercialgallery.com/)
 * [UNSW Galleries](https://www.artdesign.unsw.edu.au/unsw-galleries)
 * [UTS ART](http://art.uts.edu.au/)
+* [Verge Gallery](https://verge-gallery.net)
 
 ## Installation
 

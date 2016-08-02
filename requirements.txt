@@ -5,7 +5,7 @@ characteristic==14.3.0
 cryptography==1.1
 cssselect==0.9.1
 dj-database-url==0.3.0
-Django==1.9.4
+Django==1.10
 django-mailgun==0.8.0
 docutils==0.12
 enum34==1.0.4

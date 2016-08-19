@@ -58,7 +58,7 @@ class Event(models.Model):
             s3     = boto3.resource('s3')
             region = os.environ.get('AWS_DEFAULT_REGION')
             bucket = s3.Bucket(os.environ.get('AWS_S3_BUCKET'))
-            key    = self.venue.replace(" ", "_") + '-' + self.titleRaw.replace(" ", "_") + '-' + self.start.strftime("%y-%m-%d") + '.jpg'
+            key    = self.venue.replace(" ", "_") + '-' + self.title_raw.replace(" ", "_") + '-' + self.start.strftime("%y-%m-%d") + '.jpg'
 
             try:
                 bucket.put_object(Key = key, Body = image_out.getvalue(), ACL='public-read')

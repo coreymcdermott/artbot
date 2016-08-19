@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from dateutil              import parser
 from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -19,8 +20,13 @@ class UNSWGalleriesSpider(CrawlSpider):
         item['title']       = response.xpath('.//h2[contains(@class, "title")]//text()').extract_first().strip()
         item['description'] = ''.join(response.xpath('.//div[contains(@class, "field-type-text-with-summary")]//text()').extract()).strip()
         item['image']       = response.xpath('.//img[contains(@typeof, "foaf:Image")]/@src').extract_first()
-        tz                  = timezone('Australia/Sydney')
-        item['start']       = tz.localize(parser.parse(response.xpath('.//span[contains(@class, "date-display-start")]/@content').extract_first(), ignoretz=True))
-        item['end']         = tz.localize(parser.parse(response.xpath('.//span[contains(@class, "date-display-end")]/@content').extract_first(), ignoretz=True))
+
+        season = response.xpath('.//span[contains(text(), "When")]/following-sibling::span/text()').extract_first().strip()
+        match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season, re.UNICODE)
+
+        if (match):
+            tz             = timezone('Australia/Sydney')
+            item['start']  = tz.localize(parser.parse(match.group('start')))
+            item['end']    = tz.localize(parser.parse(match.group('end')))
 
         yield item

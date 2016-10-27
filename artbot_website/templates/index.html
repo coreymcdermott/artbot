@@ -32,7 +32,7 @@
                 <img src="{{ event.image }}"></img>
                 <h3>{{ event.title }}</h3>
                 <p>{{ event.venue }} - {{ event.start | conditional_date }} to {{ event.end | conditional_date }}{% if event.start|badge_date %} <span class="badge">{{ event.start|badge_date }}</span>{% endif %}</p>
-                <p>{{ event.description }}</p>
+                <p>{{ event.description | linebreaks }}</p>
                 <p><a href="{{ event.url }}" target="_blank">Exhibition Website</a></p>
             </li>
             {% if forloop.counter == 2 and sponsoredContent%}
@@ -40,7 +40,7 @@
                   <img src="{{ sponsoredContent.image }}"></img>
                   <h3>{{ sponsoredContent.title }}</h3>
                   <p>{{ sponsoredContent.sponsor }} <span class="badge">Sponsor</span></p>
-                  <p>{{ sponsoredContent.description }}</p>
+                  <p>{{ sponsoredContent.description | linebreaks }}</p>
                   <p><a href="{{ sponsoredContent.url }}" target="_blank">{{ sponsoredContent.url_text }}</a></p>
               </li>
             {% endif %}

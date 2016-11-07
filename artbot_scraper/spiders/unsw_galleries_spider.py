@@ -11,7 +11,7 @@ class UNSWGalleriesSpider(CrawlSpider):
     name            = 'UNSW Galleries'
     allowed_domains = ['artdesign.unsw.edu.au']
     start_urls      = ['https://www.artdesign.unsw.edu.au/unsw-galleries']
-    rules           = (Rule(LinkExtractor(allow=('unsw-galleries/.+'), deny=('first-fridays', 'community-and-supporters', 'generation-next', 'past-exhibitions', 'upcoming-exhibitions', 'about')), callback='parse_exhibition'),)
+    rules           = (Rule(LinkExtractor(allow=('unsw-galleries/.+'), deny=('first-fridays', 'community-and-supporters', 'generation-next', 'past-exhibitions', 'upcoming-exhibitions', 'about', 'library', 'on-tour')), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
         item                = EventItem()

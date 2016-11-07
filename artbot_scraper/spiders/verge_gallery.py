@@ -5,7 +5,6 @@ from scrapy.spiders        import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from artbot_scraper.items  import EventItem
 from pytz                  import timezone
-import pdb;
 
 class VergeGallerySpider(CrawlSpider):
     name            = 'Verge Gallery'
@@ -18,7 +17,6 @@ class VergeGallerySpider(CrawlSpider):
         item_two = EventItem()
 
         season   = response.xpath('//p[contains(@style, "outline: none;")]/text()').extract_first()
-        #pdb.set_trace()
 
         if season is not None:
             match = re.search('(?P<start>(?<=OPENING\s)\w+\s+\d+).*(?P<end>(?<=CONTINUING TO\s)\w+\s+\d+)', season, re.MULTILINE)

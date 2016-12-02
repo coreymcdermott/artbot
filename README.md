@@ -10,6 +10,7 @@ Artbot is written in Python and built on [Django](http://scrapy.org) and [Scrapy
 
 Artbot is currently focused on galleries in Sydney, Australia.
 
+* [4A Centre for Contemporary Asian Art](http://www.4a.com.au/)
 * [107 Projects](http://107projects.org/whats-on/?type=exhibition)
 * [aMBUSH Gallery](http://ambushgallery.com/)
 * [Art Gallery of NSW](http://www.artgallery.nsw.gov.au)

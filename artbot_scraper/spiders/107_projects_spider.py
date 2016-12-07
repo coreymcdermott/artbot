@@ -9,8 +9,8 @@ from pytz                  import timezone
 
 class OneZeroSevenProjectsSpider(CrawlSpider):
     name            = '107 Projects'
-    allowed_domains = ['107projects.org']
-    start_urls      = ['http://107projects.org/whats-on/?type=exhibition']
+    allowed_domains = ['107.org.au']
+    start_urls      = ['http://107.org.au/whats-on/?type=exhibition']
     rules           = (Rule(LinkExtractor(allow=('event/.+'),), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):

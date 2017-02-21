@@ -11,7 +11,7 @@ class PompomSpider(CrawlSpider):
     name            = 'Galerie pompom'
     allowed_domains = ['galeriepompom.com']
     start_urls      = ['http://galeriepompom.com/galerie-pompom--exhibitions.html']
-    rules           = (Rule(LinkExtractor(deny=('exhibitions-2016', ), allow=('2016', )), callback='parse_exhibition'),)
+    rules           = (Rule(LinkExtractor(deny=('exhibitions-2016','exhibitions-2017', ), allow=('2017', )), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
         item          = EventItem()

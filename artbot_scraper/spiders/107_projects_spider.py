@@ -14,6 +14,11 @@ class OneZeroSevenProjectsSpider(CrawlSpider):
     rules           = (Rule(LinkExtractor(allow=('event/.+'),), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
+        event_type  = response.xpath('//strong[contains(text(),"TYPE:")]//following-sibling::text()').extract_first().strip()
+        if (event_type != 'EXHIBITION'):
+            return
+            yeild
+
         item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name

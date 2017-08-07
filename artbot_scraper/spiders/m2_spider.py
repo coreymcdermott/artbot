@@ -20,6 +20,8 @@ class M2Spider(Spider):
             yield request
 
     def parse_exhibition(self, response):
+        response = response.replace(body=response.body.replace('<br />', '\n'))
+        
         item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name

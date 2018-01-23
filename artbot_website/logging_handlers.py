@@ -2,6 +2,7 @@ import logging
 import datetime
 import pytz
 
+
 class DatabaseLogHandler(logging.Handler):
     def __init__(self):
         logging.Handler.__init__(self)

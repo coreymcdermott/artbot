@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
-from scrapy.commands                import ScrapyCommand
-from scrapy.exceptions              import UsageError
-from scrapy.utils.log               import configure_logging
+from scrapy.commands                 import ScrapyCommand
+from scrapy.exceptions               import UsageError
+from scrapy.utils.log                import configure_logging
 from artbot_website.logging_handlers import DatabaseLogHandler
 
 

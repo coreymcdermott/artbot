@@ -9,7 +9,7 @@ class DatabaseLogHandler(logging.Handler):
     def emit(self, record):
         try:
             from artbot_website.models import Log
-            log = Log(level=record.levelname, message=record.msg)
+            log = Log(level=record.levelname, message=record.getMessage())
             log.save()
         except:
             raise

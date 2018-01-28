@@ -1,26 +1,39 @@
-html { font-size: 1em; }
-
-body {
-  font-family: Montserrat;
-  font-weight: 400;
-  line-height: 1.45;
-  color: #333;
+* {
+  box-sizing: border-box;
 }
 
-p { margin-bottom: 0.5rem; }
+html {
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF UI Text', Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 1.0em;
+  line-height: 1.333;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+  margin: 0 0 0 0;
+}
+
+p {
+  margin: 0 0 0.5rem;
+}
 
 h1, h2, h3, h4 {
   margin-top: 0;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.333;
 }
 
-h1 { font-size: 3.998em; margin-bottom: 0.0rem; }
-h2 { font-size: 1.000em; margin-bottom: 0.5rem; line-height: 1.45; }
-h3 { font-size: 1.999em; margin-bottom: 0.5rem; }
-h4 { font-size: 1.414em; margin-bottom: 0.5rem; }
+h1 { font-size: 2.0em; margin-bottom: 0.0rem; }
+h2 { font-size: 1.0em; margin-bottom: 0.5rem; }
+h3 { font-size: 1.5em; margin-bottom: 0.5rem; }
+h4 { font-size: 1.0em; margin-bottom: 0.5rem; }
 
-small, .font_small { font-size: 0.707em; }
+small, .font_small {
+  font-size: 0.707em;
+}
 
 ul {
   list-style-type: none;
@@ -29,19 +42,27 @@ ul {
 }
 
 .content li img {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.3rem 0;
   width: 100%;
   height: 200px;
   object-fit: cover;
+  vertical-align: middle;
+  border: 0;
 }
 
-@media (min-device-width : 737px) {
-.content li img {
-    margin: 0 0 0.5rem 0;
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-  }
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.column {
+  padding-left: 15px;
+  padding-right: 15px;
+  flex: 1;
+}
+
+.row {
+  display: block;
 }
 
 li p {
@@ -56,19 +77,39 @@ li p {
 
 li {
   overflow: auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
 }
 
 .container {
   max-width: 600px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .header {
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 15px 0;
 }
 
 .badge {
   background-color: #333;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 10px
+}
+
+.badge:empty {
+  display: none
 }
 
 .footer {
@@ -78,15 +119,14 @@ li {
   padding: 1.5rem 0 1.5rem 0;
 }
 
-.footer a, a:link, a:visited, a:active, a:hover  {
+.footer a, a:link, a:visited, a:active, a:hover {
   text-decoration: underline !important;
   color: #fff;
 }
 
 .footer li {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
-
 
 a[href^="http://"]:after {
   content: "\f08e";
@@ -109,8 +149,20 @@ a[href^="https://"]:after {
 }
 
 /* Strip from links to own domain or with class no_icon */
-a[href^="http://artbot.io"]:after,
-a.no_icon:after {
-  content:"" !important;
+
+a[href^="http://artbot.io"]:after, a.no_icon:after {
+  content: "" !important;
   padding-left: 0;
+}
+
+@media (min-width: 737px) {
+  .content li img {
+    margin: 0 0 0.3rem 0;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  .row {
+    display: flex;
+  }
 }

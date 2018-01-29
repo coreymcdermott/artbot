@@ -32,7 +32,7 @@ class Event(models.Model):
     class Meta:
         unique_together = ('venue', 'title_raw')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def crop_image(self):

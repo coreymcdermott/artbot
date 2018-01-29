@@ -71,7 +71,6 @@ hide.short_description = "Hide"
 def crop_image(modeladmin, request, queryset):
     for event in queryset:
         try:
-            print event
             event.crop_image()
         except Exception as e:
             messages.error(request, str(e))

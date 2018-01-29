@@ -28,7 +28,7 @@ class MinervaSpider(Spider):
         item['image']       = response.urljoin(response.xpath('.//div[contains(@class, "documentation")]//img/@src').extract_first())
 
         season = ' '.join(response.xpath('.//span[contains(@class, "dates")]//text()').extract()).strip()
-        match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–\—]+(?P<end>\d+\s+\w+,\s+\d+)', season, re.UNICODE)
+        match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–\—]+(?P<end>\d+\s+\w+,\s+\d+)', season)
 
         if (match):
             tz             = timezone('Australia/Sydney')

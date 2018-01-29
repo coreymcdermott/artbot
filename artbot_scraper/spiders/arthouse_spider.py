@@ -27,18 +27,18 @@ class ArthouseSpider(Spider):
         item['description'] = ''.join(response.xpath('//div[contains(@id, "exhibition")]//hr/following-sibling::p//text()').extract()).strip()
         item['image']       = response.urljoin(response.xpath('//img//@src').extract_first())
 
-        season = ''.join(map(unicode, response.xpath('//div[contains(@id, "headerSubTitle")]//text()[not(ancestor::em)]').extract())).strip()
-        match  = re.match(u'(?P<start>^[\d\w\s]+)[\s\-\–]*(?P<end>[\d\w\s]+$)', season, re.UNICODE)
+        season = ''.join(response.xpath('//div[contains(@id, "headerSubTitle")]//text()[not(ancestor::em)]').extract()).strip()
+        match  = re.match(u'(?P<start>^[\d\w\s]+)[\s\-\–]*(?P<end>[\d\w\s]+$)', season)
 
         if (match):
             tz    = timezone('Australia/Sydney')
             start = tz.localize(parser.parse(match.group('start'), fuzzy = True))
             end   = tz.localize(parser.parse(match.group('end'), fuzzy = True))
 
-            if (re.match(u'^\d+$', match.group('start'), re.UNICODE)):
+            if (re.match(u'^\d+$', match.group('start'))):
                 start = start.replace(month=end.month, year=end.year)
 
-            if (re.match(u'^\d+\s+\w+$', match.group('start'), re.UNICODE)):
+            if (re.match(u'^\d+\s+\w+$', match.group('start'))):
                 start = start.replace(year=end.year)
 
             item['start'] = start

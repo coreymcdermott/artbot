@@ -26,17 +26,17 @@ class AGNSpider(Spider):
         item['image']       = response.urljoin(response.xpath('.//div[contains(@class, "group")]//img/@src').extract_first())
 
         season = response.xpath('.//div[contains(@id, "main")]//p[1]//text()').extract_first().strip()
-        match  = re.search(u'\.\s+(?P<start>[\d+\s+\w]+)[\s\-\–]*(?P<end>[\d+\s+\w]+)\.', season, re.UNICODE)
+        match  = re.search('\.\s+(?P<start>[\d+\s+\w]+)[\s\-\–]*(?P<end>[\d+\s+\w]+)\.', season)
 
         if (match):
             tz    = timezone('Australia/Sydney')
             start = tz.localize(parser.parse(match.group('start'), fuzzy = True))
             end   = tz.localize(parser.parse(match.group('end'), fuzzy = True))
 
-            if (re.match(u'^\d+$', match.group('start'), re.UNICODE)):
+            if (re.match('^\d+$', match.group('start'))):
                 start = start.replace(month=end.month, year=end.year)
 
-            if (re.match(u'^\d+\s+\w+$', match.group('start'), re.UNICODE)):
+            if (re.match('^\d+\s+\w+$', match.group('start'))):
                 start = start.replace(year=end.year)
 
             item['start'] = start

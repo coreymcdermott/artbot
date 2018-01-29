@@ -20,7 +20,7 @@ class TheCommercialSpider(Spider):
             item['venue'] = self.name
 
             text  = href.xpath('text()').extract_first().strip()
-            match = re.search(u'(?P<start>\d+\/\d+\/\d+)[\s\-\–]*(?P<end>\d+\/\d+\/\d+)\:(?P<title>.*)', text, re.UNICODE)
+            match = re.search(u'(?P<start>\d+\/\d+\/\d+)[\s\-\–]*(?P<end>\d+\/\d+\/\d+)\:(?P<title>.*)', text)
 
             if (match):
                 tz    = timezone('Australia/Sydney')

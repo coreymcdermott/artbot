@@ -22,7 +22,7 @@ class UNSWGalleriesSpider(CrawlSpider):
         item['image']       = response.xpath('.//img[contains(@typeof, "foaf:Image")]/@src').extract_first()
 
         season = response.xpath('.//span[contains(text(), "When")]/following-sibling::span/text()').extract_first().strip()
-        match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season, re.UNICODE)
+        match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season)
 
         if (match):
             tz             = timezone('Australia/Sydney')

@@ -26,7 +26,7 @@ class MaySpaceSpider(Spider):
         item['image']       = response.urljoin(response.xpath('.//div[contains(@class, "artist-grid-image2")]//img/@src').extract_first())
 
         season = ' '.join(response.xpath('.//div[contains(@class, "side2")]/h2/following-sibling::p[1]/strong/text()').extract()).strip()
-        match  = re.search(u'(?P<start>\d+\s+\w+)\sto\s(?P<end>\d+\s+\w+\s+\d+)', season, re.UNICODE)
+        match  = re.search(u'(?P<start>\d+\s+\w+)\sto\s(?P<end>\d+\s+\w+\s+\d+)', season)
 
         if (match):
             tz             = timezone('Australia/Sydney')

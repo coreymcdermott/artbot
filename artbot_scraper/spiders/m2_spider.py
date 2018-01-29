@@ -30,7 +30,7 @@ class M2Spider(Spider):
         item['image']       = response.urljoin(response.xpath('.//div[contains(@class, "m2rightcolumn")]//img[1]/@src').extract_first())
 
         season = ''.join(response.xpath('.//div[contains(@class, "showdate")]//text()').extract()).strip()
-        match  = re.search(u'(?P<start>\d+\s+\w+\s+\d+).*\s+(?P<end>\d+\s+\w+\s+\d+)', season, re.UNICODE)
+        match  = re.search(u'(?P<start>\d+\s+\w+\s+\d+).*\s+(?P<end>\d+\s+\w+\s+\d+)', season)
 
         if (match):
             tz            = timezone('Australia/Sydney')

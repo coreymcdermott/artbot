@@ -21,7 +21,7 @@ class VergeGallerySpider(CrawlSpider):
         item['image']       = response.xpath('//figure[contains(@class, "featured-image")]//img/@src').extract_first().strip()
 
         season = response.xpath('//h2[contains(@class, "entry-title")]/text()').extract_first()
-        match  = re.search('(?P<start>(?<=\:\:\s)\w+\s+\d+)[\s\-\–]*(?P<end>\w+\s+\d+)', season, re.UNICODE)
+        match  = re.search('(?P<start>(?<=\:\:\s)\w+\s+\d+)[\s\-\–]*(?P<end>\w+\s+\d+)', season)
 
         if (match):
             tz = timezone('Australia/Sydney')

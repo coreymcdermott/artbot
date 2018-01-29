@@ -4,7 +4,7 @@ import os
 from django.db    import models
 from django.utils import timezone
 from PIL          import Image, ImageChops
-from StringIO     import StringIO
+from io           import StringIO
 
 
 class Event(models.Model):

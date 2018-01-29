@@ -28,7 +28,7 @@ class AGNSpider(Spider):
         item['image']       = response.urljoin(response.xpath('.//div[contains(@id, "content")]//img/@src').extract_first())
 
         season = ' '.join(response.xpath('.//div[contains(@class, "exhib-details")]//h3/text()').extract()).strip()
-        match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season, re.UNICODE)
+        match  = re.search(u'(?P<start>\d+\s+\w+[\s+\d]*)[\s\-\–]*(?P<end>\d+\s+\w+\s+\d+)$', season)
 
         if (match):
             tz             = timezone('Australia/Sydney')

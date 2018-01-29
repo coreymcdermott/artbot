@@ -26,7 +26,7 @@ class FirstdraftSpider(Spider):
         item['image']       = response.xpath('//section[contains(concat(" ", @class, " "), " images_container ")]//img/@src').extract_first()
 
         season = response.xpath('//div[contains(concat(" ", @class, " "), " secondary ")]//p[contains(@class, "dateX")]//text()').extract_first().strip()
-        match  = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season, re.UNICODE)
+        match  = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season)
 
         if (match):
             tz            = timezone('Australia/Sydney')

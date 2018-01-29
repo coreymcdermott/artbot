@@ -21,7 +21,7 @@ class NationalArtSchoolSpider(Spider):
             item['image']       = response.urljoin(detail.xpath('.//img/@src').extract_first())
 
             season = detail.xpath('.//span//text()').extract_first()
-            match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–to]*(?P<end>\d+\s+\w+)', unicode(season), re.UNICODE)
+            match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–to]*(?P<end>\d+\s+\w+)', season)
 
             if (match):
                 tz            = timezone('Australia/Sydney')

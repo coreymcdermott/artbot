@@ -16,7 +16,10 @@ class Command(BaseCommand):
         if new_events:
             message += 'New Events\n\n'
             for event in new_events:
-                message += '%s \t %s\n' % (event.start.date(), event.title)
+                try:
+                    message += '%s \t %s\n' % (event.start.date(), event.title)
+                except AttributeError:
+                    message += '%s \t %s\n' % ('-\t\t', event.title)
         else:
             message += 'No New Events\n'
 
@@ -24,7 +27,10 @@ class Command(BaseCommand):
         if unpublished_events:
             message += '\nUnpublished Events\n\n'
             for event in unpublished_events:
-                message += '%s \t %s\n' % (event.start.date(), event.title)
+                try:
+                    message += '%s \t %s\n' % (event.start.date(), event.title)
+                except AttributeError:
+                    message += '%s \t %s\n' % ('-\t\t', event.title)
         else:
             message += '\nNo Unpublished Events\n'
 

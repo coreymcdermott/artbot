@@ -11,17 +11,30 @@ class M2Spider(Spider):
     allowed_domains = ['m2gallery.com.au']
     start_urls      = ['http://m2gallery.com.au/Exhibitions.aspx']
 
+    def __init__(self):
+        self.download_delay = 3
+
     def parse(self, response):
         for href in response.xpath('//div[contains(@id, "dnn_ctr430_ExbList_pnlList")]//ul//li//a/@href'):
             url = response.urljoin(href.extract())
+            list_id = None
 
-            request = Request(url, callback=self.parse_exhibition)
-            request.meta['dont_redirect'] = True
-            yield request
+            match = re.search('(?<=listid/)(?P<list_id>\d+)', url)
+
+            if (match):
+                list_id = int(match.group('list_id'))
+
+            # Only scrape post 2018 exhibitions.
+            if (list_id >= 178):
+                request = Request(url, callback=self.parse_exhibition)
+                request.meta['dont_redirect'] = True
+                yield request
+            else:
+                continue
 
     def parse_exhibition(self, response):
-        response = response.replace(body=response.body.replace('<br />', '\n'))
-        
+        response = response.replace(body=response.body.replace(b'<br>', b'\n'))
+
         item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
@@ -36,5 +49,6 @@ class M2Spider(Spider):
             tz            = timezone('Australia/Sydney')
             item['start'] = tz.localize(parser.parse(match.group('start')))
             item['end']   = tz.localize(parser.parse(match.group('end')))
+
 
         yield item

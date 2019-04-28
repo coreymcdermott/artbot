@@ -9,10 +9,10 @@ from pytz                 import timezone
 class FirstdraftSpider(Spider):
     name            = 'Firstdraft'
     allowed_domains = ['firstdraft.org.au']
-    start_urls      = ['http://firstdraft.org.au/exhibitions/']
+    start_urls      = ['https://firstdraft.org.au/exhibition']
 
     def parse(self, response):
-        for href in response.xpath('//article//a/@href'):
+        for href in response.xpath('//div[contains(@class, "summary-title")]//a/@href'):
             url = response.urljoin(href.extract())
 
             yield Request(url, callback=self.parse_exhibition)
@@ -21,16 +21,13 @@ class FirstdraftSpider(Spider):
         item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
-        item['title']       = response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]/h1/text()').extract_first().strip()
-        item['description'] = ''.join(response.xpath('//div[contains(concat(" ", @class, " "), " exhibition ")]//h3//text()').extract()).strip()
-        item['image']       = response.xpath('//section[contains(concat(" ", @class, " "), " images_container ")]//img/@src').extract_first()
+        item['title']       = response.xpath('//div[contains(@data-layout-label, "Post Body")]//h1/text()').extract_first().strip()
+        item['description'] = ''.join(response.xpath('//div[contains(@data-layout-label, "Post Body")]//p/text()').extract()).strip()
+        item['image']       = response.xpath('//div[contains(@data-layout-label, "Post Body")]//img/@src').extract_first()
 
-        season = response.xpath('//div[contains(concat(" ", @class, " "), " secondary ")]//p[contains(@class, "dateX")]//text()').extract_first().strip()
-        match  = re.match(u'(?P<start>\d+\.\d+\.\d+)[\s\-\–]*(?P<end>\d+\.\d+\.\d+)', season)
-
-        if (match):
-            tz            = timezone('Australia/Sydney')
-            item['start'] = tz.localize(parser.parse(match.group('start'), dayfirst = True))
-            item['end']   = tz.localize(parser.parse(match.group('end'),   dayfirst = True))
+        event_dates = response.xpath('//time[contains(@class, "event-date")]//@datetime').extract()
+        tz = timezone('Australia/Sydney')
+        item['start'] = tz.localize(parser.parse(event_dates[0], dayfirst = True))
+        item['end'] = tz.localize(parser.parse(event_dates[1], dayfirst = True))
 
         yield item

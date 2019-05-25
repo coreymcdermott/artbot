@@ -9,23 +9,22 @@ from pytz                 import timezone
 class NationalArtSchoolSpider(Spider):
     name            = 'National Art School'
     allowed_domains = ['nas.edu.au']
-    start_urls      = ['http://www.nas.edu.au/NASGallery/Current-Exhibition-and-Events']
+    start_urls      = ['http://www.nas.edu.au/current-exhibitions/']
 
     def parse(self, response):
-        for detail in response.xpath('//div[contains(@class, "detail") and not(contains(*/h2, "Contacts & Opening Hours")) and not(contains(*/h2,"Current Exhibition and Events "))]'):
-            item                = EventItem()
-            item['url']         = response.url
-            item['venue']       = self.name
-            item['title']       = detail.xpath('.//h2/text()').extract_first().strip()
-            item['description'] = ''.join(detail.xpath('.//p[img]//following-sibling::*//text()').extract()).strip()
-            item['image']       = response.urljoin(detail.xpath('.//img/@src').extract_first())
+        item                = EventItem()
+        item['url']         = response.url
+        item['venue']       = self.name
+        item['title']       = response.xpath('.//h2/text()').extract_first().strip()
+        item['description'] = ''.join(response.xpath('//div//em/parent::div//text()').extract()).strip()
+        item['image']       = response.urljoin(response.xpath('.//img[contains(@class, "vc_single_image-img")]/@src').extract_first())
 
-            season = detail.xpath('.//span//text()').extract_first()
-            match  = re.search(u'(?P<start>\d+\s+\w+)[\s\-\–to]*(?P<end>\d+\s+\w+)', season)
+        season = response.xpath('//div[contains(@class, "vc_empty_space")]//strong/parent::div/text()[1]').extract_first()
+        match  = re.search(u'(?P<start>[\w\d\s]+)\s\—\s(?P<end>[\w\d\s]+)', season)
 
-            if (match):
-                tz            = timezone('Australia/Sydney')
-                item['start'] = tz.localize(parser.parse(match.group('start')))
-                item['end']   = tz.localize(parser.parse(match.group('end')))
+        if (match):
+            tz            = timezone('Australia/Sydney')
+            item['start'] = tz.localize(parser.parse(match.group('start')))
+            item['end']   = tz.localize(parser.parse(match.group('end')))
 
-            yield item
+        yield item

@@ -18,7 +18,6 @@ Artbot is currently focused on galleries in Sydney, Australia.
 * [Galerie pompom](http://www.galeriepompom.com/)
 * [m2 Gallery](http://m2gallery.com.au)
 * [May Space](http://www.mayspace.com.au/)
-* [Mild Manners](http://mild-manners.com/JEDDA-DAISY-CULLEY-UNIVERSAL-LOVE)
 * [Museum of Contemporary Art Australia](http://www.mca.com.au)
 * [National Art School](http://www.nas.edu.au/NASGallery/Current-Exhibition-and-Events)
 * [Sarah Cottier Gallery](http://www.sarahcottiergallery.com/)

@@ -1,35 +1,34 @@
 # -*- coding: utf-8 -*-
 import re
+import json
+from datetime             import datetime
 from scrapy               import Spider
 from dateutil             import parser
 from artbot_scraper.items import EventItem
 from pytz                 import timezone
-
+from scrapy.utils.response import open_in_browser
 
 class MCASpider(Spider):
     name            = 'MCA'
     allowed_domains = ['mca.com.au']
-    start_urls      = ['http://www.mca.com.au/whatson/next-month/']
+    start_urls      = ['https://www.mca.com.au/api/query-whats-on/?show=exhibitions&on=next-thirty-days&for=everyone']
 
     def parse(self, response):
-        for event in response.xpath('//div[contains(@class, "featured_item")]'):
-            url = event.xpath('.//a/@href').extract_first()
-            if 'mca-collection' in url:
-                continue
+        json_response = json.loads(response.body_as_unicode())
 
+        for exhibition in json_response['exhibitions']:
             item                = EventItem()
-            item['url']         = response.urljoin(url)
+            item['url']         = exhibition['url']
             item['venue']       = self.name
-            item['title']       = event.xpath('.//h2/text()').extract_first().strip()
-            item['description'] = ''.join(event.xpath('.//div[@class="col-md-4"]/p[3]//text()').extract())
-            item['image']       = response.urljoin(event.xpath('.//div[contains(@class, "featured-image")]/@style').re_first('(?<=\().*(?=\))'))
+            item['title']       = exhibition['title']
+            item['description'] = exhibition['summary']
+            item['image']       = response.urljoin(exhibition['thumbnail']['src'])
 
-            season = event.xpath('.//b[contains(@class, "occurrence_date")]/text()').extract_first().strip().replace(u'\u2013\xa0', u'')
-            match  = re.match('(?P<start>\d+\s+\w+)[\s\-]*(?P<end>\d+\s+\w+)', season)
+            match  = re.match('until (?P<end>\d+\s+\w+)', exhibition['date_range'].replace('&nbsp;', ' '))
 
             if (match):
                 tz            = timezone('Australia/Sydney')
-                item['start'] = tz.localize(parser.parse(match.group('start')))
+                item['start'] = tz.localize(datetime.today())
                 item['end']   = tz.localize(parser.parse(match.group('end')))
 
             yield item

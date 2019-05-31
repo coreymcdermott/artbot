@@ -21,9 +21,15 @@ class UTSSpider(Spider):
         item                = EventItem()
         item['url']         = response.url
         item['venue']       = self.name
-        item['title']       = response.xpath('//h1[contains(@class, "entry-title")]/text()').extract_first().strip() \
+        item['title']       = response.xpath('//h1[contains(@class, "entry-title")]/text()').extract_first().strip()
+
+        try:
+            item['title']   = item['title'] \
                             + ' - ' \
                             + response.xpath('//h2[contains(@class, "entry-subtitle")]/text()').extract_first().strip()
+        except AttributeError:
+             pass
+
         item['description'] = ''.join(response.xpath('//div[contains(@class, "entry-content")]//text()').extract()).strip()
         item['image']       = response.xpath('//img[contains(@class, "large-crop")]/@src').extract_first()
         tz                  = timezone('Australia/Sydney')

@@ -10,8 +10,9 @@ from pytz                  import timezone
 class SarahCottierGallery(CrawlSpider):
     name            = 'Sarah Cottier Gallery'
     allowed_domains = ['sarahcottiergallery.com']
-    start_urls      = ['http://www.sarahcottiergallery.com/']
+    start_urls      = ['http://www.sarahcottiergallery.com/exhibition.htm']
     rules           = (Rule(LinkExtractor(allow=('exhibition/.+', )), callback='parse_exhibition'),)
+    download_delay  = 16
 
     def parse_exhibition(self, response):
         item          = EventItem()

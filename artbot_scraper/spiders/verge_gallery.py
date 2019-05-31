@@ -10,7 +10,7 @@ class VergeGallerySpider(CrawlSpider):
     name            = 'Verge Gallery'
     allowed_domains = ['verge-gallery.net']
     start_urls      = ['https://verge-gallery.net/category/current/']
-    rules           = (Rule(LinkExtractor(allow=('/\d+\/\d+\/\d+'), deny=('eoi', '2017-program')), callback='parse_exhibition'),)
+    rules           = (Rule(LinkExtractor(allow=('/\d+\/\d+\/\d+'), deny=('eoi', '2017-program', 'twitter', 'facebook')), callback='parse_exhibition'),)
 
     def parse_exhibition(self, response):
         item                = EventItem()

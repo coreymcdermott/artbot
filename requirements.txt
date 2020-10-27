@@ -2,7 +2,7 @@ boto3==1.9.159
 botocore==1.12.159
 cffi==1.12.3
 characteristic==14.3.0
-cryptography==2.7
+cryptography==3.2
 cssselect==1.0.3
 dj-database-url==0.5.0
 Django==2.2.1
